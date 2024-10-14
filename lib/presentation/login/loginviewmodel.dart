@@ -1,9 +1,12 @@
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
+
 import '../../domain/common/apiresults.dart';
 import '../../domain/models/user.dart';
-import '../../domain/repository/registerusecase.dart';
+import '../../domain/repository/login_usecase.dart';
+
 
 @injectable
 class LoginViewModel extends Cubit<LoginScreenState>{
@@ -54,7 +57,9 @@ class ErrorState extends LoginScreenState{
 }
 class SuccessState extends LoginScreenState{
   User? user;
-  SuccessState(this.user);
+  SuccessState(this.user){
+    print("Login Successful! User:$user");
+  }
 }
 
 

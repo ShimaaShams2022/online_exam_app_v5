@@ -43,7 +43,15 @@ return authResponse ;
 
  Future<AuthResponse?>register(RegisterRequest registerRequest) async {
 
-  var response=await _dio.post(ApiConstants.registerApi,data: registerRequest);
+  var response=await _dio.post(ApiConstants.registerApi,data:{
+  "username": registerRequest.username,
+  "firstName":registerRequest.firstName,
+  "lastName" : registerRequest.lastName,
+  "email": registerRequest.email,
+  "password": registerRequest.password,
+  "rePassword" : registerRequest.rePassword,
+  "phone" :registerRequest.phone,
+  });
   var authResponse=AuthResponse.fromJson(response.data);
   return authResponse;
  }
