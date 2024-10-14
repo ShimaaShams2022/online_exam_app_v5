@@ -1,24 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:online_exam_app_v5/presentation/profile/profile_screen.dart';
-import 'package:online_exam_app_v5/presentation/register/register_screen.dart';
+import 'package:online_exam_app_v5/presentation/register/register_view_model.dart';
+
 import '../../di.dart';
 import '../app_theme/app_theme_data.dart';
+
+import '../login/loginscreen.dart';
 import '../utilities/size_utilities.dart';
 import '../utilities/text_utilities.dart';
 import '../utilities/utilitis.dart';
 import '../utilities/validation.dart';
 import '../widgets/custom_text_form_field.dart';
-import 'loginviewmodel.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
-  static const String routeName = "LoginScreen";
+
+class RegisterScreen extends StatelessWidget {
+  RegisterScreen({super.key});
+  static const String routeName = "RegisterScreen";
   // Field injection
-  LoginViewModel viewModel = getIt.get<LoginViewModel>();
+  RegisterViewModel viewModel = getIt.get<RegisterViewModel>();
   final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController userNameController = TextEditingController();
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
+
   bool isButtonEnabled=false;
 
   void validateInputs(){
@@ -34,7 +43,7 @@ class LoginScreen extends StatelessWidget {
       create: (context) => viewModel,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Login'),
+          title: Text(TextUtilities.signUpButton),
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
@@ -42,8 +51,11 @@ class LoginScreen extends StatelessWidget {
             },
           ),
         ),
-        body: BlocListener<LoginViewModel, LoginScreenState>(
+        body: BlocListener<RegisterViewModel, RegisterScreenState>(
           listenWhen: (previous, current) {
+            if (previous is LoadingState) {
+              Navigator.pop(context);
+            }
             return current is LoadingState || current is ErrorState;
           },
           listener: (context, state) {
@@ -69,56 +81,96 @@ class LoginScreen extends StatelessWidget {
               });
             } else if (state is SuccessState) {
               Navigator.of(context).pop(); // Close dialogs before showing success
-              Navigator.pushReplacementNamed(context, ProfileScreen.routeName);
-              print("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+              showDialog(context: context, builder: (context) {
+                return AlertDialog(
+                  content: Row(children: [
+                    Text("Logged in Successfully"),
+                  ]),
+                );
+              });
             }
           },
           child: Container(
-           padding: EdgeInsets.all(16.0),
+           padding: EdgeInsets.all(appSize.spacePadding),
             child: Center(
-              child: SingleChildScrollView(
-                child: Form(
-                  key: _formKey,
-                  onChanged: validateInputs,
+              child: Form(
+                key: _formKey,
+                onChanged: validateInputs,
+                child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                   
                     children: [
+                      CustomTextFormField(
+                        controller: userNameController,
+                        label: TextUtilities.userNameField,
+                        hintText: TextUtilities.askUserNameField,
+                        validator: validateFullName,
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.height*appSize.spaceHeightRatio),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: CustomTextFormField(
+                              controller: firstNameController,
+                              label: TextUtilities.firstNameField,
+                              hintText: TextUtilities.askFirstNameField,
+                              validator: validateName,
+                            ),
+                          ),
+                          SizedBox(width: MediaQuery.of(context).size.width*appSize.spaceWidthRatio),
+                          Expanded(
+                            child: CustomTextFormField(
+                              controller: lastNameController,
+                              label: TextUtilities.lastNameField,
+                              hintText: TextUtilities.askLastNameField,
+                              validator: validateName,
+
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.height*appSize.spaceHeightRatio),
                       CustomTextFormField(
                         controller: emailController,
                         label: TextUtilities.emailField,
                         hintText: TextUtilities.emailFieldAsk,
                         validator: validateEmail,
                       ),
-                  
-                      SizedBox(height: MediaQuery.of(context).size.height*appSize.spaceHeightRatio),
-                      CustomTextFormField(
-                        controller: passwordController,
-                        label: TextUtilities.passwordField,
-                        hintText: TextUtilities.passwordFieldAsk,
-                        validator: validatePassword,
-                        obscureText: true,
-                      ),
                       SizedBox(height: MediaQuery.of(context).size.height*appSize.spaceHeightRatio),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Checkbox(value: false, onChanged: (value) {}),
-                          Text(TextUtilities.rememberField),
-                          Spacer(),
-                          TextButton(
-                            onPressed: () {},
-                            child: Text(TextUtilities.forgetField,
-                              style: TextStyle(
-                                  color: AppThemeData.textPrimaryColor,
-                                  decoration: TextDecoration.underline
-                              ),
+                          Expanded(
+                            child: CustomTextFormField(
+                              controller: passwordController,
+                              label: TextUtilities.passwordField,
+                              hintText: TextUtilities.passwordFieldAsk,
+                              validator: validatePassword,
+                              obscureText: true,
+                            ),
+                          ),
+                          SizedBox(width: MediaQuery.of(context).size.width*appSize.spaceWidthRatio),
+                          Expanded(
+                            child: CustomTextFormField(
+                              controller: confirmPasswordController,
+                              label: TextUtilities.confirmPassword,
+                              hintText: TextUtilities.confirmPasswordAsk,
+                              validator: (value)=> validateConfirmPassword(passwordController.text, value),
+                              obscureText: true,
                             ),
                           ),
                         ],
                       ),
                       SizedBox(height: MediaQuery.of(context).size.height*appSize.spaceHeightRatio),
-                      BlocBuilder<LoginViewModel, LoginScreenState>(
+                      CustomTextFormField(
+                        controller: phoneNumberController,
+                        label: TextUtilities.phoneNumberField,
+                        hintText: TextUtilities.askPhoneNumberField,
+                        validator: validateEgyptianPhoneNumber,
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.height*appSize.spaceHeightRatio),
+                      SizedBox(height: MediaQuery.of(context).size.height*appSize.spaceHeightRatio),
+                      BlocBuilder<RegisterViewModel, RegisterScreenState>(
                         builder: (context, state) {
                           if (state is LoadingState) {
                             return Center(child: CircularProgressIndicator());
@@ -134,18 +186,14 @@ class LoginScreen extends StatelessWidget {
                                         SnackBar(
                                             content: Text("Please fill all fields")));
                                   } else {
-                                    login();
-
+                                    signUp();
                                   }
                                 },
                                 style:ElevatedButton.styleFrom(
                                     minimumSize: Size(double.infinity,MediaQuery.of(context).size.height*appSize.bottomWidthRatio),
                                     backgroundColor:isButtonEnabled? (AppThemeData.primaryColor ): (AppThemeData.secondaryColor)
                                 ),
-                                child: Text(TextUtilities.loginButton,
-                                    style: TextStyle(fontSize: 16)
-
-                                ),
+                                child: Text(TextUtilities.signUpButton, style: TextStyle(fontSize: 16)),
                               ),
                             );
                           }
@@ -162,10 +210,10 @@ class LoginScreen extends StatelessWidget {
                             ),),
                           InkWell(
                             onTap: (){
-                              Navigator.pushNamed(context,RegisterScreen.routeName);
+                              Navigator.pushNamed(context,LoginScreen.routeName);
                             },
                             child: const Text(
-                              TextUtilities.signUpButton,
+                              TextUtilities.loginButton,
                               style: TextStyle(
                                   color:AppThemeData.primaryColor,
                                   decoration: TextDecoration.underline
@@ -185,9 +233,16 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  void login() {
+  void signUp() {
+    String userName = userNameController.text;
+    String firstName = firstNameController.text;
+    String lastName = lastNameController.text;
     String email = emailController.text;
+    String phone = phoneNumberController.text;
+    String rePassword = confirmPasswordController.text;
     String password = passwordController.text;
-    viewModel.doIntent(LoginIntent(email, password));
+
+
+    viewModel.doIntent(RegisterIntent(userName, firstName, lastName, email, phone, password, rePassword));
   }
 }

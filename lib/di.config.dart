@@ -18,9 +18,10 @@ import 'data/datasource/auth/authofflinedatasourceimpl.dart' as _i649;
 import 'data/datasource/auth/authonlinedatasourceimpl.dart' as _i570;
 import 'data/repository/authRepositoryimpl.dart' as _i134;
 import 'domain/repository/authrepository.dart' as _i922;
-import 'domain/repository/registerusecase.dart' as _i946;
-import 'domain/repository/usecase.dart' as _i768;
+import 'domain/repository/login_usecase.dart' as _i871;
+import 'domain/repository/register_usecase.dart' as _i702;
 import 'presentation/login/loginviewmodel.dart' as _i108;
+import 'presentation/register/register_view_model.dart' as _i733;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -42,12 +43,14 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i424.Authonlinedatasource>(),
           gh<_i1062.AuthOfflineDataSource>(),
         ));
-    gh.factory<_i946.LoginUseCase>(
-        () => _i946.LoginUseCase(gh<_i922.AuthRepository>()));
-    gh.factory<_i768.LoginUseCase>(
-        () => _i768.LoginUseCase(gh<_i922.AuthRepository>()));
+    gh.factory<_i871.LoginUseCase>(
+        () => _i871.LoginUseCase(gh<_i922.AuthRepository>()));
+    gh.factory<_i702.RegisterUseCase>(
+        () => _i702.RegisterUseCase(gh<_i922.AuthRepository>()));
+    gh.factory<_i733.RegisterViewModel>(
+        () => _i733.RegisterViewModel(gh<_i702.RegisterUseCase>()));
     gh.factory<_i108.LoginViewModel>(
-        () => _i108.LoginViewModel(gh<_i946.LoginUseCase>()));
+        () => _i108.LoginViewModel(gh<_i871.LoginUseCase>()));
     return this;
   }
 }
