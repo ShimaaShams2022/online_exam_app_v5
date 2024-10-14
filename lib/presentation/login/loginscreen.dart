@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../di.dart';
+import '../app_theme/app_theme_data.dart';
+import '../utilities/size_utilities.dart';
+import '../utilities/text_utilities.dart';
 import '../utilities/utilitis.dart';
+import '../utilities/validation.dart';
+import '../widgets/custom_text_form_field.dart';
 import 'loginviewmodel.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -9,9 +14,17 @@ class LoginScreen extends StatelessWidget {
   static const String routeName = "LoginScreen";
   // Field injection
   LoginViewModel viewModel = getIt.get<LoginViewModel>();
-
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  bool isButtonEnabled=false;
+
+  void validateInputs(){
+
+      isButtonEnabled=_formKey.currentState?.validate()??false;
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -67,96 +80,101 @@ class LoginScreen extends StatelessWidget {
             }
           },
           child: Container(
-            padding: EdgeInsets.all(16.0),
+           padding: EdgeInsets.all(16.0),
             child: Center(
               child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextFormField(
-                      controller: emailController,
-                      decoration: InputDecoration(
-                        labelText: 'Email',
-                        hintText: 'Enter your email',
-                        border: OutlineInputBorder(),
+                child: Form(
+                  key: _formKey,
+                  onChanged: validateInputs,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                  
+                    children: [
+                      CustomTextFormField(
+                        controller: emailController,
+                        label: TextUtilities.emailField,
+                        hintText: TextUtilities.emailFieldAsk,
+                        validator: validateEmail,
                       ),
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                    SizedBox(height: 20),
-                    TextFormField(
-                      controller: passwordController,
-                      decoration: InputDecoration(
-                        labelText: 'Password',
-                        hintText: 'Enter your password',
-                        border: OutlineInputBorder(),
+                  
+                      SizedBox(height: MediaQuery.of(context).size.height*appSize.spaceHeightRatio),
+                      CustomTextFormField(
+                        controller: passwordController,
+                        label: TextUtilities.passwordField,
+                        hintText: TextUtilities.passwordFieldAsk,
+                        validator: validatePassword,
+                        obscureText: true,
                       ),
-                      obscureText: true,
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Checkbox(value: false, onChanged: (newValue) {}),
-                        Text('Remember me'),
-                        Spacer(),
-                        TextButton(
-                          onPressed: () {
-                            // Add forgot password functionality
-                          },
-                          child: Text('Forgot password?'),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 20),
-                    BlocBuilder<LoginViewModel, LoginScreenState>(
-                      builder: (context, state) {
-                        if (state is LoadingState) {
-                          return Center(child: CircularProgressIndicator());
-                        } else {
-                          return SizedBox(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                if (emailController.text.isEmpty ||
-                                    passwordController.text.isEmpty) {
-                                  // Show a snack bar or dialog for empty fields
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content: Text("Please fill all fields")));
-                                } else {
-                                  login();
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.symmetric(vertical: 15), backgroundColor: Colors.blue,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ), // Button color
+                      SizedBox(height: MediaQuery.of(context).size.height*appSize.spaceHeightRatio),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Checkbox(value: false, onChanged: (value) {}),
+                          Text(TextUtilities.rememberField),
+                          Spacer(),
+                          TextButton(
+                            onPressed: () {},
+                            child: Text(TextUtilities.forgetField,
+                              style: TextStyle(
+                                  color: AppThemeData.textPrimaryColor,
+                                  decoration: TextDecoration.underline
                               ),
-                              child: Text('Login', style: TextStyle(fontSize: 16)),
                             ),
-                          );
-                        }
-                      },
-                    ),
-                    SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Don't have an account? "),
-                        GestureDetector(
-                          onTap: () {
-                            // Add sign-up functionality
-                          },
-                          child: Text(
-                            'Sign up',
-                            style: TextStyle(
-                                color: Colors.blue, fontWeight: FontWeight.bold),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.height*appSize.spaceHeightRatio),
+                      BlocBuilder<LoginViewModel, LoginScreenState>(
+                        builder: (context, state) {
+                          if (state is LoadingState) {
+                            return Center(child: CircularProgressIndicator());
+                          } else {
+                            return SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  if (emailController.text.isEmpty ||
+                                      passwordController.text.isEmpty) {
+                                    // Show a snack bar or dialog for empty fields
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text("Please fill all fields")));
+                                  } else {
+                                    login();
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  padding: EdgeInsets.symmetric(vertical: 15), backgroundColor: Colors.blue,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ), // Button color
+                                ),
+                                child: Text('Login', style: TextStyle(fontSize: 16)),
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.height*appSize.spaceHeightRatio),
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                  
+                        children: [
+                          Text(TextUtilities.askIfHaveAccount,
+                            style: TextStyle(
+                                color:AppThemeData.textPrimaryColor
+                            ),),
+                          Text(
+                            TextUtilities.signUpField,
+                            style: TextStyle(
+                                color:AppThemeData.primaryColor,
+                                decoration: TextDecoration.underline
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
