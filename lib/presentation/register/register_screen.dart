@@ -6,11 +6,14 @@ import '../../di.dart';
 import '../app_theme/app_theme_data.dart';
 
 import '../login/loginscreen.dart';
+import '../profile/profile_screen.dart';
 import '../utilities/size_utilities.dart';
 import '../utilities/text_utilities.dart';
 import '../utilities/utilitis.dart';
 import '../utilities/validation.dart';
 import '../widgets/custom_text_form_field.dart';
+import '../widgets/error_dialog.dart';
+import '../widgets/show_loading.dart';
 
 
 class RegisterScreen extends StatelessWidget {
@@ -53,41 +56,28 @@ class RegisterScreen extends StatelessWidget {
         ),
         body: BlocListener<RegisterViewModel, RegisterScreenState>(
           listenWhen: (previous, current) {
-            if (previous is LoadingState) {
-              Navigator.pop(context);
+            if(current is LoadingState || current is ErrorState || current is SuccessState)
+            {
+              return true;
             }
-            return current is LoadingState || current is ErrorState;
+            return false ;
           },
           listener: (context, state) {
             if (state is LoadingState) {
-              showDialog(context: context, builder: (context) {
-                return AlertDialog(
-                  content: Row(children: [
-                    CircularProgressIndicator(),
-                    SizedBox(width: 10),
-                    Text("Loading...")
-                  ]),
-                );
-              });
+              showLoadingDialog(context);
             } else if (state is ErrorState) {
               var message = extractErrorMessage(state.exception);
               Navigator.of(context).pop(); // Close loading dialog
-              showDialog(context: context, builder: (context) {
-                return AlertDialog(
-                  content: Row(children: [
-                    Expanded(child: Text(message)),
-                  ]),
-                );
-              });
+              showErrorDialog(context, message);
             } else if (state is SuccessState) {
-              Navigator.of(context).pop(); // Close dialogs before showing success
-              showDialog(context: context, builder: (context) {
-                return AlertDialog(
-                  content: Row(children: [
-                    Text("Logged in Successfully"),
-                  ]),
-                );
-              });
+
+              final email=emailController.text;
+              Navigator.of(context).popUntil((route)=>route.isFirst); // Close dialogs before showing success
+              Navigator.pushNamed(context,
+                ProfileScreen.routeName,
+                arguments: email,
+              );
+
             }
           },
           child: Container(
@@ -106,6 +96,7 @@ class RegisterScreen extends StatelessWidget {
                         label: TextUtilities.userNameField,
                         hintText: TextUtilities.askUserNameField,
                         validator: validateFullName,
+
                       ),
                       SizedBox(height: MediaQuery.of(context).size.height*appSize.spaceHeightRatio),
                       Row(
@@ -116,6 +107,7 @@ class RegisterScreen extends StatelessWidget {
                               label: TextUtilities.firstNameField,
                               hintText: TextUtilities.askFirstNameField,
                               validator: validateName,
+
                             ),
                           ),
                           SizedBox(width: MediaQuery.of(context).size.width*appSize.spaceWidthRatio),
@@ -125,6 +117,7 @@ class RegisterScreen extends StatelessWidget {
                               label: TextUtilities.lastNameField,
                               hintText: TextUtilities.askLastNameField,
                               validator: validateName,
+
 
                             ),
                           ),
@@ -136,6 +129,7 @@ class RegisterScreen extends StatelessWidget {
                         label: TextUtilities.emailField,
                         hintText: TextUtilities.emailFieldAsk,
                         validator: validateEmail,
+
                       ),
                       SizedBox(height: MediaQuery.of(context).size.height*appSize.spaceHeightRatio),
                       Row(
@@ -157,6 +151,7 @@ class RegisterScreen extends StatelessWidget {
                               hintText: TextUtilities.confirmPasswordAsk,
                               validator: (value)=> validateConfirmPassword(passwordController.text, value),
                               obscureText: true,
+
                             ),
                           ),
                         ],
@@ -167,6 +162,7 @@ class RegisterScreen extends StatelessWidget {
                         label: TextUtilities.phoneNumberField,
                         hintText: TextUtilities.askPhoneNumberField,
                         validator: validatePhone,
+
                       ),
                       SizedBox(height: MediaQuery.of(context).size.height*appSize.spaceHeightRatio),
                       SizedBox(height: MediaQuery.of(context).size.height*appSize.spaceHeightRatio),
@@ -179,13 +175,7 @@ class RegisterScreen extends StatelessWidget {
                               width: double.infinity,
                               child: ElevatedButton(
                                 onPressed: () {
-                                  if (emailController.text.isEmpty ||
-                                      passwordController.text.isEmpty) {
-                                    // Show a snack bar or dialog for empty fields
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                            content: Text("Please fill all fields")));
-                                  } else {
+                                  if (isButtonEnabled==true){
                                     signUp();
                                   }
                                 },

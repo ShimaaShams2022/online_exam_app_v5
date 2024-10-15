@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  const ProfileScreen({required this.email,super.key});
+
   static const String routeName = "ProfileScreen";
+
+  final String email;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Welcome"),
+        title: Text("Profile"),
       ),
       body: Center(
-          child: Text("you are logged in")
+          child: Text("Welcome, $email")
       ),
     );
 

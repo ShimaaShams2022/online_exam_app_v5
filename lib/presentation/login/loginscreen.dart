@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:online_exam_app_v5/presentation/profile/profile_screen.dart';
 import 'package:online_exam_app_v5/presentation/register/register_screen.dart';
+
+import 'package:online_exam_app_v5/presentation/widgets/error_dialog.dart';
+import 'package:online_exam_app_v5/presentation/widgets/show_loading.dart';
 import '../../di.dart';
 import '../app_theme/app_theme_data.dart';
 import '../utilities/size_utilities.dart';
@@ -23,7 +26,7 @@ class LoginScreen extends StatelessWidget {
 
   void validateInputs(){
 
-      isButtonEnabled=_formKey.currentState?.validate()??false;
+    isButtonEnabled=_formKey.currentState?.validate()??false;
 
   }
 
@@ -44,40 +47,32 @@ class LoginScreen extends StatelessWidget {
         ),
         body: BlocListener<LoginViewModel, LoginScreenState>(
           listenWhen: (previous, current) {
-            return current is LoadingState || current is ErrorState || current is SuccessState ;
+            if(current is LoadingState || current is ErrorState || current is SuccessState)
+            {
+              return true;
+            }
+            return false ;
           },
           listener: (context, state) {
 
             if (state is LoadingState) {
-              showDialog(context: context,
-                  barrierDismissible: false,
-                  builder: (context) {
-                return AlertDialog(
-                  content: Row(children: [
-                    CircularProgressIndicator(),
-                    SizedBox(width: 10),
-                    Text("Loading...")
-                  ]),
-                );
-              });
+             showLoadingDialog(context);
             } else if (state is ErrorState) {
               var message = extractErrorMessage(state.exception);
               Navigator.of(context).pop(); // Close loading dialog
-              showDialog(context: context, builder: (context) {
-                return AlertDialog(
-                  content: Row(children: [
-                    Expanded(child: Text(message)),
-                  ]),
-                );
-              });
+             showErrorDialog(context, message);
             } else if (state is SuccessState) {
+              final email=emailController.text;
               Navigator.of(context).popUntil((route)=>route.isFirst); // Close dialogs before showing success
-              Navigator.pushNamed(context, ProfileScreen.routeName);
+              Navigator.pushNamed(context,
+                ProfileScreen.routeName,
+                arguments: email,
+              );
 
             }
           },
           child: Container(
-           padding: EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(16.0),
             child: SingleChildScrollView(
               child: Form(
                 key: _formKey,
@@ -91,6 +86,7 @@ class LoginScreen extends StatelessWidget {
                       label: TextUtilities.emailField,
                       hintText: TextUtilities.emailFieldAsk,
                       validator: validateEmail,
+
                     ),
 
                     SizedBox(height: MediaQuery.of(context).size.height*appSize.spaceHeightRatio),
@@ -100,6 +96,7 @@ class LoginScreen extends StatelessWidget {
                       hintText: TextUtilities.passwordFieldAsk,
                       validator: validatePassword,
                       obscureText: true,
+
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height*appSize.spaceHeightRatio),
                     Row(
@@ -130,15 +127,8 @@ class LoginScreen extends StatelessWidget {
                             width: double.infinity,
                             child: ElevatedButton(
                               onPressed: () {
-                                if (emailController.text.isEmpty ||
-                                    passwordController.text.isEmpty) {
-                                  // Show a snack bar or dialog for empty fields
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content: Text("Please fill all fields")));
-                                } else {
+                                if (isButtonEnabled==true){
                                   login();
-
                                 }
                               },
                               style:ElevatedButton.styleFrom(
@@ -146,7 +136,7 @@ class LoginScreen extends StatelessWidget {
                                   backgroundColor:isButtonEnabled? (AppThemeData.primaryColor ): (AppThemeData.secondaryColor)
                               ),
                               child: Text(TextUtilities.loginButton,
-                               style:  TextStyle(
+                                style:  TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color:AppThemeData.textSecondaryColor,
                                 ),

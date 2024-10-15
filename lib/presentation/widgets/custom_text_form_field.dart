@@ -9,6 +9,7 @@ class CustomTextFormField extends StatelessWidget {
   final String? Function(String?) validator;
   final bool obscureText;
 
+
   CustomTextFormField({
     required this.controller,
     required this.label,

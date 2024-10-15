@@ -21,5 +21,6 @@ class TextUtilities{
   static const String askPhoneNumberField="Enter phone number";
   static const String signUpButton="Signup";
   static const String askHaveAccount="Already have an account?";
+  static const String loadingMessage="Loading......";
 
 }
