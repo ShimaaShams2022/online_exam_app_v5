@@ -10,12 +10,20 @@ String? validateEmail(String? value) {
 String? validatePassword(String? value) {
   if (value == null || value.isEmpty) {
     return 'Please enter your password';
-  } else if (value.length < 6) {
+  } else if (value.length < 8) {
     return 'Password must be at least 6 characters';
   }
+  bool hasUppercase = value.contains(RegExp(r'[A-Z]'));
+  bool hasLowercase = value.contains(RegExp(r'[a-z]'));
+  bool hasDigits = value.contains(RegExp(r'[0-9]'));
+  bool hasSpecialCharacters = value.contains(RegExp(r'[@$!%*?&]'));
+
+  if (!hasUppercase || !hasLowercase || !hasDigits || !hasSpecialCharacters) {
+    return 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character';
+  }
+
   return null;
 }
-
 String? validateFullName(String? value) {
   if (value == null || value.isEmpty) {
     return 'Please enter your full name';

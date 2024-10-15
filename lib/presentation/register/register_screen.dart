@@ -193,7 +193,10 @@ class RegisterScreen extends StatelessWidget {
                                     minimumSize: Size(double.infinity,MediaQuery.of(context).size.height*appSize.bottomWidthRatio),
                                     backgroundColor:isButtonEnabled? (AppThemeData.primaryColor ): (AppThemeData.secondaryColor)
                                 ),
-                                child: Text(TextUtilities.signUpButton, style: TextStyle(fontSize: 16)),
+                                child: Text(TextUtilities.signUpButton, style:  TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color:AppThemeData.textSecondaryColor,
+                                ),),
                               ),
                             );
                           }
