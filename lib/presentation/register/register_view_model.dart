@@ -22,7 +22,7 @@ class RegisterViewModel extends Cubit<RegisterScreenState>{
     emit(LoadingState());
 
     var result = await registerCase.invoke(intent.username,intent.firstname,intent.lastname,
-       intent.phone, intent.password,intent.rePassword,intent.email);
+       intent.email, intent.password,intent.rePassword,intent.phone);
     switch (result) {
 
       case Success<User?>():{
@@ -39,13 +39,21 @@ class RegisterViewModel extends Cubit<RegisterScreenState>{
 sealed class RegisterScreenIntent{}
 class RegisterIntent extends RegisterScreenIntent{
   String  username;
-      String  firstname;
+  String  firstname;
   String  lastname;
-      String  email;
+  String  email;
+  String password;
+  String  rePassword;
   String  phone;
-      String password;
-      String  rePassword;
-  RegisterIntent(this.username,this.firstname,this.lastname,this.email,this.phone,this.password,this.rePassword);
+
+  RegisterIntent({
+    required this.username,
+    required this.firstname,
+    required this.lastname,
+    required this.email,
+    required this.password,
+    required this.rePassword,
+    required this.phone});
 }
 
 

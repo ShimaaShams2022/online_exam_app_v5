@@ -99,7 +99,7 @@ class LoginScreen extends StatelessWidget {
                       label: TextUtilities.passwordField,
                       hintText: TextUtilities.passwordFieldAsk,
                       validator: validatePassword,
-                      obscureText: false,
+                      obscureText: true,
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height*appSize.spaceHeightRatio),
                     Row(
