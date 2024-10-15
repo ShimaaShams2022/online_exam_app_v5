@@ -166,7 +166,7 @@ class RegisterScreen extends StatelessWidget {
                         controller: phoneNumberController,
                         label: TextUtilities.phoneNumberField,
                         hintText: TextUtilities.askPhoneNumberField,
-                        validator: validateEgyptianPhoneNumber,
+                        validator: validatePhone,
                       ),
                       SizedBox(height: MediaQuery.of(context).size.height*appSize.spaceHeightRatio),
                       SizedBox(height: MediaQuery.of(context).size.height*appSize.spaceHeightRatio),
@@ -246,6 +246,13 @@ class RegisterScreen extends StatelessWidget {
     String password = passwordController.text;
 
 
-    viewModel.doIntent(RegisterIntent(userName, firstName, lastName, email, phone, password, rePassword));
+    viewModel.doIntent(RegisterIntent(
+        username: userName,
+        firstname:firstName,
+        lastname: lastName,
+        email: email,
+        password: password,
+        rePassword: rePassword,
+        phone: phone));
   }
 }
