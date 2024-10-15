@@ -1,8 +1,9 @@
 String? validateEmail(String? value) {
+  final RegExp emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
   if (value == null || value.isEmpty) {
     return 'Please enter your email';
-  } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-    return 'This Email is not valid';
+  } else if (!emailRegex.hasMatch(value)) {
+    return 'Please enter a valid email';
   }
   return null;
 }
@@ -45,11 +46,13 @@ String? validateName(String? value) {
   return null;
 }
 
-String? validateEgyptianPhoneNumber(String? value) {
+
+String? validatePhone(String? value) {
+  final RegExp phoneRegex = RegExp(r'^01[0125][0-9]{8}$');
   if (value == null || value.isEmpty) {
     return 'Please enter your phone number';
-  } else if (!RegExp(r'^01[0125]\d{8}$').hasMatch(value)) {
-    return 'Phone number must be 11 digits and start with 010, 011, 012, or 015';
+  } else if (!phoneRegex.hasMatch(value)) {
+    return 'Please enter a valid phone number';
   }
   return null;
 }
