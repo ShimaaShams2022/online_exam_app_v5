@@ -1,9 +1,12 @@
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
+
 import '../../domain/common/apiresults.dart';
 import '../../domain/models/user.dart';
-import '../../domain/repository/registerusecase.dart';
+import '../../domain/repository/login_usecase.dart';
+
 
 @injectable
 class LoginViewModel extends Cubit<LoginScreenState>{
@@ -12,6 +15,7 @@ class LoginViewModel extends Cubit<LoginScreenState>{
   LoginViewModel(this.loginCase):super(InitialState());
 
   void doIntent(LoginScreenIntent intent){
+
     switch (intent) {
 
       case LoginIntent():_login(intent);
@@ -27,9 +31,11 @@ class LoginViewModel extends Cubit<LoginScreenState>{
 
       case Success<User?>():{
         emit(SuccessState(result.data));
+        break;
       }
       case Fail<User?>():{
         emit(ErrorState(result.exception));
+        break;
       }
     }
   }
@@ -54,7 +60,9 @@ class ErrorState extends LoginScreenState{
 }
 class SuccessState extends LoginScreenState{
   User? user;
-  SuccessState(this.user);
+  SuccessState(this.user){
+
+  }
 }
 
 
