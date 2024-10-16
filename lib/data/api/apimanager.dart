@@ -41,6 +41,49 @@ return authResponse ;
 
  }
 
+ Future<AuthResponse?> resetPassword(String email, String password) async
+ {
+  var response = await _dio.put(ApiConstants.resetPasswordApi,data:
+  {
+   "email": email ,
+   "newPassword":password
+  });
+  var authResponse = AuthResponse.fromJson(response.data);
+
+  return authResponse ;
+
+
+
+ }
+
+ Future<AuthResponse?> forgetPassword(String email) async
+ {
+  var response = await _dio.post(ApiConstants.forgetPasswordApi,data:
+  {
+   "email": email ,
+  });
+  var authResponse = AuthResponse.fromJson(response.data);
+
+  return authResponse ;
+
+
+
+ }
+
+ Future<AuthResponse?> verifyPassword(String otp) async
+ {
+  var response = await _dio.post(ApiConstants.verifyPasswordApi,data:
+  {
+   "resetCode": otp ,
+  });
+  var authResponse = AuthResponse.fromJson(response.data);
+
+  return authResponse ;
+
+
+
+ }
+
  Future<AuthResponse?>register(RegisterRequest registerRequest) async {
 
   var response=await _dio.post(ApiConstants.registerApi,data:{

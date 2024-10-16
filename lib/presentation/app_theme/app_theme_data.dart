@@ -22,9 +22,15 @@ class AppThemeData {
     ),
     dividerColor:dividerColor,
     textTheme: const TextTheme(
+      headlineLarge: TextStyle(
+          fontSize: 30,
+          fontWeight: FontWeight.bold,
+          fontFamily:'Intel' ,
+          color: textPrimaryColor
+      ),
       headlineMedium: TextStyle(
           fontSize: 22,
-          fontWeight: FontWeight.w400,
+          fontWeight: FontWeight.bold,
           fontFamily:'Intel' ,
           color: textPrimaryColor
       ),

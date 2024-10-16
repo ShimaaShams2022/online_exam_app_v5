@@ -65,3 +65,14 @@ String? validateConfirmPassword(String? password, String? confirmPassword) {
   }
   return null;
 }
+
+String? validateNumber(String? number) {
+  if(number==null||number.isNotEmpty){
+ return ("enter valid OTP");
+  }
+  else if(number.length!=2){
+    return ("enter valid OTP");
+  }
+  return null;
+}
+

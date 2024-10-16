@@ -20,7 +20,9 @@ class TextUtilities{
   static const String phoneNumberField="Phone number";
   static const String askPhoneNumberField="Enter phone number";
   static const String signUpButton="Signup";
+  static const String continueButton="Continue";
   static const String askHaveAccount="Already have an account?";
   static const String loadingMessage="Loading......";
+  static const String appName="Online Exam";
 
 }
