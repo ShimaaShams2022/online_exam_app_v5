@@ -28,6 +28,45 @@ class AuthOnlineDataSourceImpl implements Authonlinedatasource{
   }
 
   @override
+  Future<Result<User?>> resetPassword(String email, String password) async {
+
+    return executeApi<User?>(() async {
+      var authResponse = await apiManager.resetPassword(email, password);
+      var userDto = UserDto(token: authResponse?.token);
+      return userDto.toUser();
+    });
+
+
+  }
+
+
+
+  @override
+  Future<Result<User?>> forgetPassword(String email) async {
+
+    return executeApi<User?>(() async {
+      var authResponse = await apiManager.forgetPassword(email);
+      var userDto = UserDto(token: authResponse?.token);
+      return userDto.toUser();
+    });
+
+
+  }
+
+  @override
+  Future<Result<User?>> verifyPassword(String otp) async {
+
+    return executeApi<User?>(() async {
+      var authResponse = await apiManager.verifyPassword(otp);
+      var userDto = UserDto(token: authResponse?.token);
+      return userDto.toUser();
+    });
+
+
+  }
+
+
+  @override
   Future<Result<User?>> register(
       String username,
       String firstName,

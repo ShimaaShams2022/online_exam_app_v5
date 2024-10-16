@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:online_exam_app_v5/presentation/forget_password/forget_password_screen.dart';
 import 'package:online_exam_app_v5/presentation/profile/profile_screen.dart';
 import 'package:online_exam_app_v5/presentation/register/register_screen.dart';
 
@@ -47,7 +48,7 @@ class LoginScreen extends StatelessWidget {
         ),
         body: BlocListener<LoginViewModel, LoginScreenState>(
           listenWhen: (previous, current) {
-            if(current is LoadingState || current is ErrorState || current is SuccessState)
+            if(current is LoginLoadingState || current is LoginErrorState || current is LoginSuccessState)
             {
               return true;
             }
@@ -55,13 +56,13 @@ class LoginScreen extends StatelessWidget {
           },
           listener: (context, state) {
 
-            if (state is LoadingState) {
+            if (state is LoginLoadingState) {
              showLoadingDialog(context);
-            } else if (state is ErrorState) {
+            } else if (state is LoginErrorState) {
               var message = extractErrorMessage(state.exception);
               Navigator.of(context).pop(); // Close loading dialog
              showErrorDialog(context, message);
-            } else if (state is SuccessState) {
+            } else if (state is LoginSuccessState) {
               final email=emailController.text;
               Navigator.of(context).popUntil((route)=>route.isFirst); // Close dialogs before showing success
               Navigator.pushNamed(context,
@@ -103,11 +104,13 @@ class LoginScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Checkbox(value: false, onChanged: (value) {}),
-                        Text(TextUtilities.rememberField),
-                        Spacer(),
+                        const Text(TextUtilities.rememberField),
+                        const Spacer(),
                         TextButton(
-                          onPressed: () {},
-                          child: Text(TextUtilities.forgetField,
+                          onPressed: () {
+                            Navigator.pushNamed(context, ForgetPasswordScreen.routeName);
+                          },
+                          child: const Text(TextUtilities.forgetField,
                             style: TextStyle(
                                 color: AppThemeData.textPrimaryColor,
                                 decoration: TextDecoration.underline
@@ -120,7 +123,7 @@ class LoginScreen extends StatelessWidget {
                     BlocBuilder<LoginViewModel, LoginScreenState>(
                       builder: (context, state) {
 
-                        if (state is LoadingState) {
+                        if (state is LoginLoadingState) {
                           return Center(child: CircularProgressIndicator());
                         } else {
                           return SizedBox(
@@ -135,7 +138,7 @@ class LoginScreen extends StatelessWidget {
                                   minimumSize: Size(double.infinity,MediaQuery.of(context).size.height*appSize.bottomWidthRatio),
                                   backgroundColor:isButtonEnabled? (AppThemeData.primaryColor ): (AppThemeData.secondaryColor)
                               ),
-                              child: Text(TextUtilities.loginButton,
+                              child: const Text(TextUtilities.loginButton,
                                 style:  TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color:AppThemeData.textSecondaryColor,

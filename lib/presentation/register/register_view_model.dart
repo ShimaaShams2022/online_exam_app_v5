@@ -9,7 +9,7 @@ import '../../domain/repository/register_usecase.dart';
 class RegisterViewModel extends Cubit<RegisterScreenState>{
   RegisterUseCase registerCase;
   //                        start state
-  RegisterViewModel(this.registerCase):super(InitialState());
+  RegisterViewModel(this.registerCase):super(RegisterInitialState());
 
   void doIntent(RegisterScreenIntent intent){
     switch (intent) {
@@ -19,17 +19,17 @@ class RegisterViewModel extends Cubit<RegisterScreenState>{
     }
   }
   void _register(RegisterIntent intent) async{
-    emit(LoadingState());
+    emit(RegisterLoadingState());
 
     var result = await registerCase.invoke(intent.username,intent.firstname,intent.lastname,
        intent.email, intent.password,intent.rePassword,intent.phone);
     switch (result) {
 
       case Success<User?>():{
-        emit(SuccessState(result.data));
+        emit(RegisterSuccessState(result.data));
       }
       case Fail<User?>():{
-        emit(ErrorState(result.exception));
+        emit(RegisterErrorState(result.exception));
       }
     }
   }
@@ -58,15 +58,15 @@ class RegisterIntent extends RegisterScreenIntent{
 
 
 sealed class RegisterScreenState{}
-class InitialState extends RegisterScreenState{}
-class LoadingState extends RegisterScreenState{}
-class ErrorState extends RegisterScreenState{
+class RegisterInitialState extends RegisterScreenState{}
+class RegisterLoadingState extends RegisterScreenState{}
+class RegisterErrorState extends RegisterScreenState{
   Exception? exception;
-  ErrorState(this.exception);
+  RegisterErrorState(this.exception);
 }
-class SuccessState extends RegisterScreenState{
+class RegisterSuccessState extends RegisterScreenState{
   User? user;
-  SuccessState(this.user);
+  RegisterSuccessState(this.user);
 }
 
 

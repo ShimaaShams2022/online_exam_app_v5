@@ -12,7 +12,7 @@ import '../../domain/repository/login_usecase.dart';
 class LoginViewModel extends Cubit<LoginScreenState>{
   LoginUseCase loginCase;
   //                        start state
-  LoginViewModel(this.loginCase):super(InitialState());
+  LoginViewModel(this.loginCase):super(LoginInitialState());
 
   void doIntent(LoginScreenIntent intent){
 
@@ -23,18 +23,18 @@ class LoginViewModel extends Cubit<LoginScreenState>{
     }
   }
   void _login(LoginIntent intent) async{
-    emit(LoadingState());
+    emit(LoginLoadingState());
 
     var result = await loginCase.invoke(intent.email,
         intent.password);
     switch (result) {
 
       case Success<User?>():{
-        emit(SuccessState(result.data));
+        emit(LoginSuccessState(result.data));
         break;
       }
       case Fail<User?>():{
-        emit(ErrorState(result.exception));
+        emit(LoginErrorState(result.exception));
         break;
       }
     }
@@ -52,15 +52,15 @@ class LoginIntent extends LoginScreenIntent{
 
 
 sealed class LoginScreenState{}
-class InitialState extends LoginScreenState{}
-class LoadingState extends LoginScreenState{}
-class ErrorState extends LoginScreenState{
+class LoginInitialState extends LoginScreenState{}
+class LoginLoadingState extends LoginScreenState{}
+class LoginErrorState extends LoginScreenState{
   Exception? exception;
-  ErrorState(this.exception);
+  LoginErrorState(this.exception);
 }
-class SuccessState extends LoginScreenState{
+class LoginSuccessState extends LoginScreenState{
   User? user;
-  SuccessState(this.user){
+  LoginSuccessState(this.user){
 
   }
 }

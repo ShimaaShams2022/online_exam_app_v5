@@ -56,20 +56,20 @@ class RegisterScreen extends StatelessWidget {
         ),
         body: BlocListener<RegisterViewModel, RegisterScreenState>(
           listenWhen: (previous, current) {
-            if(current is LoadingState || current is ErrorState || current is SuccessState)
+            if(current is RegisterLoadingState || current is RegisterErrorState || current is RegisterSuccessState)
             {
               return true;
             }
             return false ;
           },
           listener: (context, state) {
-            if (state is LoadingState) {
+            if (state is RegisterLoadingState) {
               showLoadingDialog(context);
-            } else if (state is ErrorState) {
+            } else if (state is RegisterErrorState) {
               var message = extractErrorMessage(state.exception);
               Navigator.of(context).pop(); // Close loading dialog
               showErrorDialog(context, message);
-            } else if (state is SuccessState) {
+            } else if (state is RegisterSuccessState) {
 
               final email=emailController.text;
               Navigator.of(context).popUntil((route)=>route.isFirst); // Close dialogs before showing success
@@ -168,7 +168,7 @@ class RegisterScreen extends StatelessWidget {
                       SizedBox(height: MediaQuery.of(context).size.height*appSize.spaceHeightRatio),
                       BlocBuilder<RegisterViewModel, RegisterScreenState>(
                         builder: (context, state) {
-                          if (state is LoadingState) {
+                          if (state is RegisterLoadingState) {
                             return Center(child: CircularProgressIndicator());
                           } else {
                             return SizedBox(
