@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:online_exam_app_v5/presentation/forget_password/forget_password_screen.dart';
-import 'package:online_exam_app_v5/presentation/profile/profile_screen.dart';
+import 'package:online_exam_app_v5/presentation/profile_default_Screen/profile_default_screen.dart';
+
 import 'package:online_exam_app_v5/presentation/register/register_screen.dart';
 
 import 'package:online_exam_app_v5/presentation/widgets/error_dialog.dart';
 import 'package:online_exam_app_v5/presentation/widgets/show_loading.dart';
 import '../../di.dart';
+import '../../domain/models/user.dart';
 import '../app_theme/app_theme_data.dart';
 import '../utilities/size_utilities.dart';
 import '../utilities/text_utilities.dart';
@@ -63,11 +65,13 @@ class LoginScreen extends StatelessWidget {
               Navigator.of(context).pop(); // Close loading dialog
              showErrorDialog(context, message);
             } else if (state is LoginSuccessState) {
-              final email=emailController.text;
+              User? loginUser=state.user;
+              String? email=loginUser?.email;
+             print(email);
               Navigator.of(context).popUntil((route)=>route.isFirst); // Close dialogs before showing success
               Navigator.pushNamed(context,
-                ProfileScreen.routeName,
-                arguments: email,
+                ProfileDefaultScreen.routeName,
+                arguments: loginUser,
               );
 
             }

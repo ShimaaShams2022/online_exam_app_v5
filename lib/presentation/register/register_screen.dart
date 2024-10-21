@@ -3,10 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:online_exam_app_v5/presentation/register/register_view_model.dart';
 
 import '../../di.dart';
+import '../../domain/models/user.dart';
 import '../app_theme/app_theme_data.dart';
 
 import '../login/loginscreen.dart';
-import '../profile/profile_screen.dart';
+
+import '../profile_default_Screen/profile_default_screen.dart';
 import '../utilities/size_utilities.dart';
 import '../utilities/text_utilities.dart';
 import '../utilities/utilitis.dart';
@@ -72,10 +74,12 @@ class RegisterScreen extends StatelessWidget {
             } else if (state is RegisterSuccessState) {
 
               final email=emailController.text;
+              User? registerUser=state.user;
+
               Navigator.of(context).popUntil((route)=>route.isFirst); // Close dialogs before showing success
               Navigator.pushNamed(context,
-                ProfileScreen.routeName,
-                arguments: email,
+                ProfileDefaultScreen.routeName,
+                arguments: registerUser,
               );
 
             }
