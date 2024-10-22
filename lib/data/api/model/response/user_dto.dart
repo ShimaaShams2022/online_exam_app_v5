@@ -11,9 +11,6 @@ class UserDto {
     this.role,
     this.isVerified,
     this.createdAt,
-    this.passwordResetCode,
-    this.passwordResetExpires,
-    this.resetCodeVerified,
   });
 
   UserDto.fromJson(dynamic json) {
@@ -26,9 +23,6 @@ class UserDto {
     role = json['role'];
     isVerified = json['isVerified'];
     createdAt = json['createdAt'];
-    passwordResetCode = json['passwordResetCode'];
-    passwordResetExpires = json['passwordResetExpires'];
-    resetCodeVerified = json['resetCodeVerified'];
   }
   String? id;
   String? username;
@@ -39,9 +33,7 @@ class UserDto {
   String? role;
   bool? isVerified;
   String? createdAt;
-  String? passwordResetCode;
-  String? passwordResetExpires;
-  bool? resetCodeVerified;
+
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -54,9 +46,7 @@ class UserDto {
     map['role'] = role;
     map['isVerified'] = isVerified;
     map['createdAt'] = createdAt;
-    map['passwordResetCode'] = passwordResetCode;
-    map['passwordResetExpires'] = passwordResetExpires;
-    map['resetCodeVerified'] = resetCodeVerified;
+
     return map;
   }
 
@@ -71,9 +61,6 @@ class UserDto {
       role: role,
       isVerified: isVerified,
       createdAt: createdAt,
-      passwordResetCode: passwordResetCode,
-      passwordResetExpires: passwordResetExpires,
-      resetCodeVerified: resetCodeVerified,
     );
   }
 }

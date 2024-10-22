@@ -10,10 +10,7 @@ class User {
     this.role,
     this.isVerified,
     this.createdAt,
-    this.passwordResetCode,
-    this.passwordResetExpires,
-    this.resetCodeVerified,
-    this.token,
+
   });
 
   String? id;
@@ -25,10 +22,5 @@ class User {
   String? role;
   bool? isVerified;
   String? createdAt;
-  String? passwordResetCode;
-  String? passwordResetExpires;
-  bool? resetCodeVerified;
-  String? token;
-
 
 }

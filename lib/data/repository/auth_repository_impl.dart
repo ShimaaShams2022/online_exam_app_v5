@@ -1,10 +1,10 @@
 import 'package:injectable/injectable.dart';
 
-import '../../domain/common/apiresults.dart';
+import '../../domain/common/api_results.dart';
 import '../../domain/models/user.dart';
-import '../../domain/repository/authrepository.dart';
-import '../contracts/auth/authofflinedatasource.dart';
-import '../contracts/auth/authonlinedatasource.dart';
+import '../../domain/repository/auth_repository.dart';
+import '../contracts/auth/auth_offline_data_source.dart';
+import '../contracts/auth/auth_online_data_source.dart';
 
 
 

@@ -1,5 +1,5 @@
 
-import '../common/apiresults.dart';
+import '../common/api_results.dart';
 import '../models/user.dart';
 
 abstract class AuthRepository

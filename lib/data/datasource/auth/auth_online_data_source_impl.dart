@@ -1,13 +1,13 @@
 
 import 'package:injectable/injectable.dart';
 
-import '../../../domain/common/apiresults.dart';
+import '../../../domain/common/api_results.dart';
 import '../../../domain/models/user.dart';
-import '../../api/apimanager.dart';
-import '../../api/model/apiextensions.dart';
-import '../../api/model/request/registerrequest.dart';
+import '../../api/api_manager.dart';
+import '../../api/model/api_extensions.dart';
+import '../../api/model/request/register_request.dart';
 
-import '../../contracts/auth/authonlinedatasource.dart';
+import '../../contracts/auth/auth_online_data_source.dart';
 
 @Injectable(as:Authonlinedatasource )
 class AuthOnlineDataSourceImpl implements Authonlinedatasource{

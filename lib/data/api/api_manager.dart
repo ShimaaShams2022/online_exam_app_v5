@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
-import 'apiconstants.dart';
-import 'model/request/registerrequest.dart';
+import 'api_constants.dart';
+import 'model/request/register_request.dart';
 import 'model/response/data_auth_response.dart';
 
 

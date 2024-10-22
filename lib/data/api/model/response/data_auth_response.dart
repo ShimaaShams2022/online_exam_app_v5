@@ -9,7 +9,8 @@ class AuthResponseDto {
   AuthResponseDto.fromJson(dynamic json) {
     message = json['message'];
     token = json['token'];
-    userDto = json['userDto'];
+    userDto = json['user'] != null ? UserDto.fromJson(json['user']) : null;
+
   }
   String? message;
   String? token;
@@ -20,7 +21,7 @@ class AuthResponseDto {
     map['message'] = message;
     map['token'] = token;
     if (userDto != null) {
-      map['userDto'] = userDto?.toJson();
+      map['user'] = userDto?.toJson();
     }
     return map;
   }

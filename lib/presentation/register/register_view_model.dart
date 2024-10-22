@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../domain/common/apiresults.dart';
+import '../../domain/common/api_results.dart';
 import '../../domain/models/user.dart';
 import '../../domain/repository/register_usecase.dart';
 
