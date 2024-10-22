@@ -1,20 +1,22 @@
+import '../../../../domain/models/user.dart';
 
-class User {
-  User({
-      this.id, 
-      this.username, 
-      this.firstName, 
-      this.lastName, 
-      this.email, 
-      this.phone, 
-      this.role, 
-      this.isVerified, 
-      this.createdAt, 
-      this.passwordResetCode, 
-      this.passwordResetExpires, 
-      this.resetCodeVerified,});
+class UserDto {
+  UserDto({
+    this.id,
+    this.username,
+    this.firstName,
+    this.lastName,
+    this.email,
+    this.phone,
+    this.role,
+    this.isVerified,
+    this.createdAt,
+    this.passwordResetCode,
+    this.passwordResetExpires,
+    this.resetCodeVerified,
+  });
 
-  User.fromJson(dynamic json) {
+  UserDto.fromJson(dynamic json) {
     id = json['_id'];
     username = json['username'];
     firstName = json['firstName'];
@@ -58,4 +60,20 @@ class User {
     return map;
   }
 
+  User toUser() {
+    return User(
+      id: id,
+      username: username,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      phone: phone,
+      role: role,
+      isVerified: isVerified,
+      createdAt: createdAt,
+      passwordResetCode: passwordResetCode,
+      passwordResetExpires: passwordResetExpires,
+      resetCodeVerified: resetCodeVerified,
+    );
+  }
 }
