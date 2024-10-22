@@ -13,6 +13,8 @@ class AppThemeData {
   static const Color textPrimaryColor = Colors.black;
   static const Color textSecondaryColor = Colors.white;
   static const Color dividerColor = Colors.white;
+  static const Color selectBottomNavigationBox=Color(0xFFCCD7EB);
+  static const Color bottomNavigationBackground=Color(0xFFEDEFF3);
 
 
   static final ThemeData lightTheme= ThemeData(
@@ -34,6 +36,12 @@ class AppThemeData {
           fontFamily:'Intel' ,
           color: textPrimaryColor
       ),
+      headlineSmall: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          fontFamily:'Intel' ,
+          color: textPrimaryColor
+      ),
 
       bodyLarge:TextStyle(
           fontSize: 14,
@@ -46,15 +54,15 @@ class AppThemeData {
 
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       type: BottomNavigationBarType.fixed,
-      backgroundColor: primaryColor,
+      backgroundColor: bottomNavigationBackground,
       unselectedLabelStyle:TextStyle(
-          fontSize: 8,
+          fontSize: 14,
           fontWeight: FontWeight.w400,
           fontFamily: 'Intel',
           color: textPrimaryColor
       ),
       selectedLabelStyle:TextStyle(
-          fontSize: 8,
+          fontSize: 14,
           fontWeight: FontWeight.w400,
           fontFamily: 'Intel',
           color: textPrimaryColor
