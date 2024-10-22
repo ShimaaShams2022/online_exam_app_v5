@@ -31,7 +31,7 @@ TextEditingController searchController=TextEditingController();
           child: Row(
             children: [
               Image.asset("assets/images/icon_exam.png"),
-              Text("Language",style: AppThemeData.lightTheme.textTheme.titleMedium,)
+              Text("Language",style: AppThemeData.lightTheme.textTheme.titleSmall,)
             ],
           ),
         )
