@@ -1,9 +1,9 @@
 
 import 'package:injectable/injectable.dart';
 
-import '../common/apiresults.dart';
+import '../common/api_results.dart';
 import '../models/user.dart';
-import 'authrepository.dart';
+import 'auth_repository.dart';
 
 @injectable
 class ResetPasswordUseCase{

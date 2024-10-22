@@ -2,9 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
-import 'apiconstants.dart';
-import 'model/request/registerrequest.dart';
-import 'model/response/authhresponse.dart';
+import 'api_constants.dart';
+import 'model/request/register_request.dart';
+import 'model/response/data_auth_response.dart';
+
 
 
 @singleton
@@ -25,7 +26,7 @@ _dio.interceptors.add(LogInterceptor(
 }
 
 
-Future<AuthResponse?> login(String email, String password) async
+Future<AuthResponseDto?> login(String email, String password) async
  {
  var response = await _dio.post(ApiConstants.signInApi,data:
  {
@@ -33,7 +34,7 @@ Future<AuthResponse?> login(String email, String password) async
   "password":password
 
  });
- var authResponse = AuthResponse.fromJson(response.data);
+ var authResponse = AuthResponseDto.fromJson(response.data);
 
 return authResponse ;
 
@@ -41,14 +42,14 @@ return authResponse ;
 
  }
 
- Future<AuthResponse?> resetPassword(String email, String password) async
+ Future<AuthResponseDto?> resetPassword(String email, String password) async
  {
   var response = await _dio.put(ApiConstants.resetPasswordApi,data:
   {
    "email": email ,
    "newPassword":password
   });
-  var authResponse = AuthResponse.fromJson(response.data);
+  var authResponse = AuthResponseDto.fromJson(response.data);
 
   return authResponse ;
 
@@ -56,13 +57,13 @@ return authResponse ;
 
  }
 
- Future<AuthResponse?> forgetPassword(String email) async
+ Future<AuthResponseDto?> forgetPassword(String email) async
  {
   var response = await _dio.post(ApiConstants.forgetPasswordApi,data:
   {
    "email": email ,
   });
-  var authResponse = AuthResponse.fromJson(response.data);
+  var authResponse = AuthResponseDto.fromJson(response.data);
 
   return authResponse ;
 
@@ -70,13 +71,13 @@ return authResponse ;
 
  }
 
- Future<AuthResponse?> verifyPassword(String otp) async
+ Future<AuthResponseDto?> verifyPassword(String otp) async
  {
   var response = await _dio.post(ApiConstants.verifyPasswordApi,data:
   {
    "resetCode": otp ,
   });
-  var authResponse = AuthResponse.fromJson(response.data);
+  var authResponse = AuthResponseDto.fromJson(response.data);
 
   return authResponse ;
 
@@ -84,7 +85,7 @@ return authResponse ;
 
  }
 
- Future<AuthResponse?>register(RegisterRequest registerRequest) async {
+ Future<AuthResponseDto?>register(RegisterRequest registerRequest) async {
 
   var response=await _dio.post(ApiConstants.registerApi,data:{
   "username": registerRequest.username,
@@ -95,7 +96,7 @@ return authResponse ;
   "rePassword" : registerRequest.rePassword,
   "phone" :registerRequest.phone,
   });
-  var authResponse=AuthResponse.fromJson(response.data);
+  var authResponse=AuthResponseDto.fromJson(response.data);
   return authResponse;
  }
 

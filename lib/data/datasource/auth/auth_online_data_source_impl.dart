@@ -1,13 +1,13 @@
 
 import 'package:injectable/injectable.dart';
 
-import '../../../domain/common/apiresults.dart';
+import '../../../domain/common/api_results.dart';
 import '../../../domain/models/user.dart';
-import '../../api/apimanager.dart';
-import '../../api/model/apiextensions.dart';
-import '../../api/model/request/registerrequest.dart';
-import '../../api/model/response/userdto.dart';
-import '../../contracts/auth/authonlinedatasource.dart';
+import '../../api/api_manager.dart';
+import '../../api/model/api_extensions.dart';
+import '../../api/model/request/register_request.dart';
+
+import '../../contracts/auth/auth_online_data_source.dart';
 
 @Injectable(as:Authonlinedatasource )
 class AuthOnlineDataSourceImpl implements Authonlinedatasource{
@@ -20,20 +20,20 @@ class AuthOnlineDataSourceImpl implements Authonlinedatasource{
 
     return executeApi<User?>(() async {
       var authResponse = await apiManager.login(email, password);
-      var userDto = UserDto(token: authResponse?.token);
-      return userDto.toUser();
-    });
+      var userDto = authResponse?.userDto;
+      return userDto?.toUser();
+    }
+    );
+    }
 
-
-  }
 
   @override
   Future<Result<User?>> resetPassword(String email, String password) async {
 
     return executeApi<User?>(() async {
       var authResponse = await apiManager.resetPassword(email, password);
-      var userDto = UserDto(token: authResponse?.token);
-      return userDto.toUser();
+      var userDto = authResponse?.userDto;
+      return userDto?.toUser();
     });
 
 
@@ -46,8 +46,8 @@ class AuthOnlineDataSourceImpl implements Authonlinedatasource{
 
     return executeApi<User?>(() async {
       var authResponse = await apiManager.forgetPassword(email);
-      var userDto = UserDto(token: authResponse?.token);
-      return userDto.toUser();
+      var userDto =authResponse?.userDto;
+      return userDto?.toUser();
     });
 
 
@@ -58,8 +58,8 @@ class AuthOnlineDataSourceImpl implements Authonlinedatasource{
 
     return executeApi<User?>(() async {
       var authResponse = await apiManager.verifyPassword(otp);
-      var userDto = UserDto(token: authResponse?.token);
-      return userDto.toUser();
+      var userDto = authResponse?.userDto;
+      return userDto?.toUser();
     });
 
 
@@ -87,8 +87,10 @@ class AuthOnlineDataSourceImpl implements Authonlinedatasource{
 
     return executeApi<User?>(() async {
       var response = await apiManager.register(body);
-      var userDto = UserDto(token: response?.token);
-      return userDto.toUser();
+      print(response?.userDto?.email);
+      var userDto = response?.userDto;
+      print(userDto?.toUser().email);
+      return userDto?.toUser();
     });
 
   }

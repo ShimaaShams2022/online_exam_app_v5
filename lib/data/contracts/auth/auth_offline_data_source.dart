@@ -1,4 +1,4 @@
-import '../../../domain/common/apiresults.dart';
+import '../../../domain/common/api_results.dart';
 import '../../../domain/models/user.dart';
 
 abstract class AuthOfflineDataSource {

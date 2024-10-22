@@ -6,7 +6,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 
-import '../../../domain/common/apiresults.dart';
+import '../../../domain/common/api_results.dart';
 
 Future<Result<T>> executeApi<T>(Future<T> Function() apiCall )async{
 

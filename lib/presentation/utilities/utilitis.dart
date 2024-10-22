@@ -1,6 +1,6 @@
 
 
-import '../../domain/common/customexceptions.dart';
+import '../../domain/common/custom_exceptions.dart';
 
 String extractErrorMessage(Exception? exception){
   var message = "something went wrong";

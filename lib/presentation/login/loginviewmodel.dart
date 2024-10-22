@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 
-import '../../domain/common/apiresults.dart';
+import '../../domain/common/api_results.dart';
 import '../../domain/models/user.dart';
 import '../../domain/repository/login_usecase.dart';
 
@@ -27,10 +27,12 @@ class LoginViewModel extends Cubit<LoginScreenState>{
 
     var result = await loginCase.invoke(intent.email,
         intent.password);
+    print("ggggggggggggggggggggggggggggg${result.toString()}");
     switch (result) {
 
       case Success<User?>():{
         emit(LoginSuccessState(result.data));
+        print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa${result.data?.email}");
         break;
       }
       case Fail<User?>():{
@@ -60,7 +62,7 @@ class LoginErrorState extends LoginScreenState{
 }
 class LoginSuccessState extends LoginScreenState{
   User? user;
-  LoginSuccessState(this.user){
+ LoginSuccessState(this.user){
 
   }
 }
