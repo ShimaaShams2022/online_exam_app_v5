@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:online_exam_app_v5/data/api/model/response/all_subjects_response.dart';
 
 import 'api_constants.dart';
 import 'model/request/register_request.dart';
@@ -98,6 +99,18 @@ return authResponse ;
   });
   var authResponse=AuthResponseDto.fromJson(response.data);
   return authResponse;
+ }
+
+ Future<AllSubjectsResponse?> getAllSubjects() async
+ {
+  var response = await _dio.get(ApiConstants.allSubjectsApi);
+  print(response.data);
+  var allSubjectsResponse = AllSubjectsResponse.fromJson(response.data);
+
+  return allSubjectsResponse ;
+
+
+
  }
 
 

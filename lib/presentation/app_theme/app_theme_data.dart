@@ -44,6 +44,12 @@ class AppThemeData {
       ),
 
       bodyLarge:TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+          fontFamily: 'Intel',
+          color: textPrimaryColor
+      ),
+      bodyMedium:TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w400,
           fontFamily: 'Intel',

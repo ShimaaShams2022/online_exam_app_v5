@@ -67,7 +67,6 @@ class LoginScreen extends StatelessWidget {
             } else if (state is LoginSuccessState) {
               User? loginUser=state.user;
               String? email=loginUser?.email;
-             print(email);
               Navigator.of(context).popUntil((route)=>route.isFirst); // Close dialogs before showing success
               Navigator.pushNamed(context,
                 ProfileDefaultScreen.routeName,
