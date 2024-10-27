@@ -15,10 +15,10 @@ class SubjectsOnLineDataSourceImpl implements SubjectsOnLineDataSource{
   SubjectsOnLineDataSourceImpl(this.apiManager);
 
   @override
-  Future<Result<List<Subject>?>> getAllSubjects() async {
+  Future<Result<List<Subject>?>> getAllSubjects(String token) async {
 
     return executeApi<List<Subject>?>(() async {
-      var allSubjectsResponse = await apiManager.getAllSubjects();
+      var allSubjectsResponse = await apiManager.getAllSubjects(token);
       var listSubjectDto = allSubjectsResponse?.subjects;
       print(listSubjectDto?.first.name);
      List<Subject> listOfSubjects=[];

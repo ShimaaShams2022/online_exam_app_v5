@@ -1,11 +1,11 @@
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:online_exam_app_v5/domain/models/auth_response_domain_model.dart';
 
 
 import '../../domain/common/api_results.dart';
-import '../../domain/models/user.dart';
-import '../../domain/repository/login_usecase.dart';
+import '../../domain/models/user.dart';import '../../domain/repository/login_usecase.dart';
 
 
 @injectable
@@ -29,11 +29,11 @@ class LoginViewModel extends Cubit<LoginScreenState>{
         intent.password);
     switch (result) {
 
-      case Success<User?>():{
+      case Success<AuthResponse?>():{
         emit(LoginSuccessState(result.data));
         break;
       }
-      case Fail<User?>():{
+      case Fail<AuthResponse?>():{
         emit(LoginErrorState(result.exception));
         break;
       }
@@ -59,8 +59,8 @@ class LoginErrorState extends LoginScreenState{
   LoginErrorState(this.exception);
 }
 class LoginSuccessState extends LoginScreenState{
-  User? user;
- LoginSuccessState(this.user){
+  AuthResponse? authResponse;
+ LoginSuccessState(this.authResponse){
 
   }
 }

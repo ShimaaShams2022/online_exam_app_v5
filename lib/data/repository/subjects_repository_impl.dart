@@ -17,8 +17,8 @@ class SubjectsRepositoryImpl implements SubjectsRepository
   SubjectsRepositoryImpl(this.subjectsOnLineDataSource);
 
   @override
-  Future<Result<List<Subject>?>> getAllSubjects() {
- return subjectsOnLineDataSource.getAllSubjects();
+  Future<Result<List<Subject>?>> getAllSubjects(String token) {
+ return subjectsOnLineDataSource.getAllSubjects(token);
   }
 
 

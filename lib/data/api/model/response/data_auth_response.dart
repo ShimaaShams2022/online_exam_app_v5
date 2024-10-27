@@ -1,3 +1,4 @@
+import '../../../../domain/models/auth_response_domain_model.dart';
 import 'user_dto.dart';
 
 class AuthResponseDto {
@@ -27,11 +28,11 @@ class AuthResponseDto {
   }
 
 
-  AuthResponseDto toAuthResponse() {
-    return AuthResponseDto(
+  AuthResponse toAuthResponse() {
+    return AuthResponse(
       message:message,
       token: token,
-      userDto: userDto,
+      user: userDto?.toUser(),
 
     );
   }

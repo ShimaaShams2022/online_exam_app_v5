@@ -101,10 +101,13 @@ return authResponse ;
   return authResponse;
  }
 
- Future<AllSubjectsResponse?> getAllSubjects() async
+ Future<AllSubjectsResponse?> getAllSubjects(String token) async
  {
-  var response = await _dio.get(ApiConstants.allSubjectsApi);
-  print(response.data);
+  var response = await _dio.get(ApiConstants.allSubjectsApi,
+      options: Options(
+       headers: {"token": token},
+      )
+  );
   var allSubjectsResponse = AllSubjectsResponse.fromJson(response.data);
 
   return allSubjectsResponse ;

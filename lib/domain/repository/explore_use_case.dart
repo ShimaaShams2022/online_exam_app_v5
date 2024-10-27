@@ -9,7 +9,7 @@ class ExploreUseCase{
   SubjectsRepository allSubjectsRepository;
   ExploreUseCase(this.allSubjectsRepository);
 
-  Future<Result<List<Subject>?>> invoke(){
-    return allSubjectsRepository.getAllSubjects() ;
+  Future<Result<List<Subject>?>> invoke(String token){
+    return allSubjectsRepository.getAllSubjects(token) ;
   }
 }

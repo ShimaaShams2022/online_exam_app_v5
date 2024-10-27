@@ -4,6 +4,6 @@ import '../common/api_results.dart';
 
 abstract class SubjectsRepository
 {
-  Future<Result<List<Subject>?>> getAllSubjects ();
+  Future<Result<List<Subject>?>> getAllSubjects (String token);
 
 }

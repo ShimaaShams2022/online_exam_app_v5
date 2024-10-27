@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:online_exam_app_v5/domain/models/auth_response_domain_model.dart';
 
 import '../../domain/common/api_results.dart';
 import '../../domain/models/user.dart';
@@ -17,7 +18,7 @@ class AuthRepositoryImpl implements AuthRepository
   AuthRepositoryImpl(this.onlineDataSource,this.offlineDataSource);
 
   @override
-  Future<Result<User?>>login(String email, String password) {
+  Future<Result<AuthResponse?>>login(String email, String password) {
  return onlineDataSource.login(email, password);
   }
 
@@ -36,7 +37,7 @@ class AuthRepositoryImpl implements AuthRepository
   }
 
   @override
-  Future<Result<User?>>register(String username, String firstname, String lastname, String email,
+  Future<Result<AuthResponse?>>register(String username, String firstname, String lastname, String email,
       String phone, String password, String rePassword) {
 return onlineDataSource.register(username, firstname, lastname, email, phone, password, rePassword)
 ;  }

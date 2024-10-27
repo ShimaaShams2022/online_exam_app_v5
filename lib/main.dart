@@ -5,6 +5,7 @@ import 'package:online_exam_app_v5/presentation/forget_password/reset_password_s
 import 'package:online_exam_app_v5/presentation/forget_password/verify_screen.dart';
 import 'package:online_exam_app_v5/presentation/home_screen/home_screen.dart';
 import 'package:online_exam_app_v5/presentation/login/loginscreen.dart';
+import 'package:online_exam_app_v5/presentation/profile_default_Screen/explore/exams_screen.dart';
 import 'package:online_exam_app_v5/presentation/profile_default_Screen/profile_default_screen.dart';
 
 import 'package:online_exam_app_v5/presentation/register/register_screen.dart';
@@ -31,9 +32,10 @@ class MyApp extends StatelessWidget {
         LoginScreen.routeName: (_) => LoginScreen(),
         RegisterScreen.routeName: (_) => RegisterScreen(),
        VerifyScreen.routeName: (_) => VerifyScreen(),
+        ExamsScreen.routeName: (_) => ExamsScreen(),
         ProfileDefaultScreen.routeName: (context){
-          final args=ModalRoute.of(context)!.settings.arguments as User;
-          return ProfileDefaultScreen( appUser:args);
+          final args=ModalRoute.of(context)!.settings.arguments as String;
+          return ProfileDefaultScreen(userToken:args );
         },
         ForgetPasswordScreen.routeName: (_) => ForgetPasswordScreen(),
        ResetPasswordScreen.routeName: (_) => ResetPasswordScreen(),

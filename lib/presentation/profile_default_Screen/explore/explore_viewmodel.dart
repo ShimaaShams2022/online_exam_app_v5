@@ -13,18 +13,12 @@ class ExploreViewModel extends Cubit<ExploreScreenState>{
   //                        start state
   ExploreViewModel(this.exploreUseCase):super(ExploreInitialState());
 
-  void doIntent(ExploreScreenIntent intent){
 
-    switch (intent) {
-
-      case ExploreIntent():_Explore(intent);
-
-    }
-  }
-  void _Explore(ExploreIntent intent) async{
+  void exploreSubjects(String token) async{
     emit(ExploreLoadingState());
 
-    var result = await exploreUseCase.invoke();
+    var result = await exploreUseCase.invoke(token);
+
     switch (result) {
 
       case Success<List<Subject>?>():{
@@ -41,9 +35,7 @@ class ExploreViewModel extends Cubit<ExploreScreenState>{
 
 
 }
-sealed class ExploreScreenIntent{}
 
-class ExploreIntent extends ExploreScreenIntent{}
 
 sealed class ExploreScreenState{}
 
