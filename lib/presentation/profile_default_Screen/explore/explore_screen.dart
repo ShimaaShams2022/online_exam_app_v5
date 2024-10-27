@@ -53,7 +53,7 @@ class ExploreScreen extends StatelessWidget {
                         if (state is ExploreLoadingState) {
                           return Center(child: CircularProgressIndicator());
                         } else if(state is ExploreSuccessState) {
-                          return AllSubjectWidgets(allSubjects: state.subjects);
+                          return AllSubjectWidgets(allSubjects: state.subjects,userToken: argsToken);
                         }
                         else {
                           return Container();

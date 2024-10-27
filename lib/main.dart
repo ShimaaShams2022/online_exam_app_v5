@@ -5,10 +5,13 @@ import 'package:online_exam_app_v5/presentation/forget_password/reset_password_s
 import 'package:online_exam_app_v5/presentation/forget_password/verify_screen.dart';
 import 'package:online_exam_app_v5/presentation/home_screen/home_screen.dart';
 import 'package:online_exam_app_v5/presentation/login/loginscreen.dart';
-import 'package:online_exam_app_v5/presentation/profile_default_Screen/explore/exams_screen.dart';
+import 'package:online_exam_app_v5/presentation/profile_default_Screen/explore/exam_questions/exam_questions_screen.dart';
+import 'package:online_exam_app_v5/presentation/profile_default_Screen/explore/exams/exam_start_screen.dart';
+import 'package:online_exam_app_v5/presentation/profile_default_Screen/explore/exams/exams_screen.dart';
 import 'package:online_exam_app_v5/presentation/profile_default_Screen/profile_default_screen.dart';
 
 import 'package:online_exam_app_v5/presentation/register/register_screen.dart';
+import 'package:online_exam_app_v5/presentation/utilities/subject_data.dart';
 
 import 'di.dart';
 import 'domain/models/user.dart';
@@ -40,6 +43,9 @@ class MyApp extends StatelessWidget {
         ForgetPasswordScreen.routeName: (_) => ForgetPasswordScreen(),
        ResetPasswordScreen.routeName: (_) => ResetPasswordScreen(),
         HomeScreen.routeName: (_) => HomeScreen(),
+        ExamStartScreen.routeName: (_) => ExamStartScreen(),
+        ExamQuestionsScreen.routeName: (_) =>ExamQuestionsScreen(),
+
 
       },
       theme: AppThemeData.lightTheme,

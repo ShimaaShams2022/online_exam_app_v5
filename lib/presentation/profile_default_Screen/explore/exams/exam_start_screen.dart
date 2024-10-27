@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:online_exam_app_v5/presentation/profile_default_Screen/explore/exam_questions/exam_questions_screen.dart';
 
-class Exam_Start_Screen extends StatelessWidget {
+import '../../../utilities/exam_data.dart';
+
+class ExamStartScreen extends StatelessWidget {
 
   static const String routeName = "Exam_Start_Screen";
-  const Exam_Start_Screen({super.key});
+  const ExamStartScreen({super.key});
 
 
   @override
   Widget build(BuildContext context) {
+    final examDataForSubject = ModalRoute.of(context)?.settings.arguments as ExamData;
     return Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              // Back button functionality here
-            },
-          ),
         ),
         body: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -26,15 +24,15 @@ class Exam_Start_Screen extends StatelessWidget {
                 Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Languages',
+                      examDataForSubject.subjectName,
                       style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
-                    Text("30 min")
+                    Text("${examDataForSubject.examData.duration} min")
                   ],
                 ),
                 SizedBox(height: 8),
                 Text(
-                  'High level | 20 Questions',
+                  '${examDataForSubject.examData.title} | ${examDataForSubject.examData.numberOfQuestions} Questions',
                   style: TextStyle(fontSize: 16, color: Colors.grey[700]),
                 ),
                 SizedBox(height: 32),
@@ -55,7 +53,7 @@ class Exam_Start_Screen extends StatelessWidget {
                   child: SizedBox(width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        // Start button functionality here
+                        Navigator.pushNamed(context, ExamQuestionsScreen.routeName,arguments: examDataForSubject);
                       },
                       style: ElevatedButton.styleFrom(backgroundColor: Colors.blue,
                         padding:

@@ -1,20 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:online_exam_app_v5/presentation/profile_default_Screen/explore/exams_screen.dart';
+import 'package:online_exam_app_v5/presentation/profile_default_Screen/explore/exams/exams_screen.dart';
+import 'package:online_exam_app_v5/presentation/utilities/subject_data.dart';
 
 import '../../app_theme/app_theme_data.dart';
 
 class BrowseSubjectWidget extends StatelessWidget {
   BrowseSubjectWidget(
-      {required this.iconImageName, required this.subjectName, super.key});
+      {required this.userToken,
+        required this.iconImageName,
+        required this.subjectName,
+        required this.subjectId,
+        super.key});
 
   String? iconImageName;
   String? subjectName;
+  String? subjectId;
+  String? userToken;
+
+  SubjectData? subjectData;
+
+
+
 
   @override
   Widget build(BuildContext context) {
+  subjectData=SubjectData(userToken!, subjectId!, subjectName!);
+
     return InkWell(
       onTap: (){
-        Navigator.pushNamed(context, ExamsScreen.routeName);
+        Navigator.pushNamed(context, ExamsScreen.routeName
+            ,arguments: subjectData);
       },
       child: Container(
         margin: EdgeInsets.all(8),
