@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:online_exam_app_v5/presentation/profile_default_Screen/explore/exam_questions/exam_header.dart';
-
+import 'package:online_exam_app_v5/presentation/profile_default_Screen/explore/exam_questions/exam_body.dart';
 import '../../../../di.dart';
 import '../../../utilities/exam_data.dart';
 import 'exam_questions_viewmodel.dart';
@@ -33,7 +32,8 @@ class _ExamQuestionsScreenState extends State<ExamQuestionsScreen> {
               Text(examDataForSubject.examData.title??""),
               Row(
                 children: [
-                 ImageIcon(AssetImage("assets/images/profile_icon.png")),
+                  Image.asset("assets/images/clock3.png"),
+
                   Text(" 30.00")
                 ],
               )
@@ -47,10 +47,8 @@ class _ExamQuestionsScreenState extends State<ExamQuestionsScreen> {
               return Center(child: CircularProgressIndicator());
             } else if(state is ExamQuestionsSuccessState) {
               var allQuestions=state.questions;
-              var totalQuestions=allQuestions?[0].exam?.numberOfQuestions;
-              return ExamHeader(questionNumber: 3, totalQuestions: 3);
-                
-                Text(state.questions!.first.exam!.id.toString());
+              return ExamScreenBody(questions: allQuestions);
+
             }
             else {
               return Container();
