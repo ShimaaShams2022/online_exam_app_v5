@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:online_exam_app_v5/domain/models/auth_response_domain_model.dart';
 
 import '../../domain/common/api_results.dart';
 import '../../domain/models/user.dart';
@@ -25,10 +26,10 @@ class RegisterViewModel extends Cubit<RegisterScreenState>{
        intent.email, intent.password,intent.rePassword,intent.phone);
     switch (result) {
 
-      case Success<User?>():{
+      case Success<AuthResponse?>():{
         emit(RegisterSuccessState(result.data));
       }
-      case Fail<User?>():{
+      case Fail<AuthResponse?>():{
         emit(RegisterErrorState(result.exception));
       }
     }
@@ -65,8 +66,8 @@ class RegisterErrorState extends RegisterScreenState{
   RegisterErrorState(this.exception);
 }
 class RegisterSuccessState extends RegisterScreenState{
-  User? user;
-  RegisterSuccessState(this.user);
+  AuthResponse? userResponse;
+  RegisterSuccessState(this.userResponse);
 }
 
 

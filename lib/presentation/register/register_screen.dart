@@ -72,14 +72,12 @@ class RegisterScreen extends StatelessWidget {
               Navigator.of(context).pop(); // Close loading dialog
               showErrorDialog(context, message);
             } else if (state is RegisterSuccessState) {
-
-              final email=emailController.text;
-              User? registerUser=state.user;
+              var userToken=state.userResponse?.token;
 
               Navigator.of(context).popUntil((route)=>route.isFirst); // Close dialogs before showing success
               Navigator.pushNamed(context,
                 ProfileDefaultScreen.routeName,
-                arguments: registerUser,
+                arguments: userToken,
               );
 
             }

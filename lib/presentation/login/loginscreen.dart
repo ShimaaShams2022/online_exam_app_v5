@@ -65,13 +65,12 @@ class LoginScreen extends StatelessWidget {
               Navigator.of(context).pop(); // Close loading dialog
              showErrorDialog(context, message);
             } else if (state is LoginSuccessState) {
-              User? loginUser=state.user;
-              String? email=loginUser?.email;
-             print(email);
+              var userToken=state.authResponse?.token;
+
               Navigator.of(context).popUntil((route)=>route.isFirst); // Close dialogs before showing success
               Navigator.pushNamed(context,
                 ProfileDefaultScreen.routeName,
-                arguments: loginUser,
+                arguments: userToken,
               );
 
             }

@@ -1,5 +1,6 @@
 
 import 'package:injectable/injectable.dart';
+import 'package:online_exam_app_v5/domain/models/auth_response_domain_model.dart';
 
 import '../../../domain/common/api_results.dart';
 import '../../../domain/models/user.dart';
@@ -16,12 +17,12 @@ class AuthOnlineDataSourceImpl implements Authonlinedatasource{
   AuthOnlineDataSourceImpl(this.apiManager);
 
   @override
-  Future<Result<User?>> login(String email, String password) async {
+  Future<Result<AuthResponse?>> login(String email, String password) async {
 
-    return executeApi<User?>(() async {
-      var authResponse = await apiManager.login(email, password);
-      var userDto = authResponse?.userDto;
-      return userDto?.toUser();
+    return executeApi<AuthResponse?>(() async {
+      var authResponseDto = await apiManager.login(email, password);
+
+      return authResponseDto?.toAuthResponse();
     }
     );
     }
@@ -67,7 +68,7 @@ class AuthOnlineDataSourceImpl implements Authonlinedatasource{
 
 
   @override
-  Future<Result<User?>> register(
+  Future<Result<AuthResponse?>> register(
       String username,
       String firstName,
       String lastName,
@@ -85,12 +86,10 @@ class AuthOnlineDataSourceImpl implements Authonlinedatasource{
       rePassword: rePassword,
     );
 
-    return executeApi<User?>(() async {
+    return executeApi<AuthResponse?>(() async {
       var response = await apiManager.register(body);
-      print(response?.userDto?.email);
-      var userDto = response?.userDto;
-      print(userDto?.toUser().email);
-      return userDto?.toUser();
+
+      return response?.toAuthResponse();
     });
 
   }

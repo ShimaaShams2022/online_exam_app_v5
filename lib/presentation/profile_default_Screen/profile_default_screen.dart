@@ -7,11 +7,12 @@ import 'BottomNavItem.dart';
 import 'explore/explore_screen.dart';
 
 class ProfileDefaultScreen extends StatefulWidget {
-   ProfileDefaultScreen({required this.appUser,super.key});
+   ProfileDefaultScreen({required this.userToken,super.key});
 
   static const String routeName = "ProfileDefaultScreen";
 
-  User appUser;
+  String userToken;
+
 
   @override
   State<ProfileDefaultScreen> createState() => _ProfileDefaultScreenState();
@@ -43,6 +44,7 @@ class _ProfileDefaultScreenState extends State<ProfileDefaultScreen> {
       );
 
   }
+
   var tabs = [ExploreScreen(), ResultScreen(),UserProfileScreen()];
 }
 

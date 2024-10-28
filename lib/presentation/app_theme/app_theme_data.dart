@@ -17,6 +17,9 @@ class AppThemeData {
   static const Color bottomNavigationBackground=Color(0xFFEDEFF3);
 
 
+
+
+
   static final ThemeData lightTheme= ThemeData(
 
     appBarTheme: AppBarTheme(
@@ -44,6 +47,12 @@ class AppThemeData {
       ),
 
       bodyLarge:TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+          fontFamily: 'Intel',
+          color: textPrimaryColor
+      ),
+      bodyMedium:TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w400,
           fontFamily: 'Intel',

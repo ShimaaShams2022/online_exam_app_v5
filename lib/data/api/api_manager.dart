@@ -1,6 +1,10 @@
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:online_exam_app_v5/data/api/model/response/ExamQuestionsResponse.dart';
+import 'package:online_exam_app_v5/data/api/model/response/ExamsResponse.dart';
+import 'package:online_exam_app_v5/data/api/model/response/all_subjects_response.dart';
 
 import 'api_constants.dart';
 import 'model/request/register_request.dart';
@@ -100,7 +104,56 @@ return authResponse ;
   return authResponse;
  }
 
+ Future<AllSubjectsResponse?> getAllSubjects(String token) async
+ {
+  var response = await _dio.get(ApiConstants.allSubjectsApi,
+      options: Options(
+       headers: {"token": token},
+      )
+  );
+  var allSubjectsResponse = AllSubjectsResponse.fromJson(response.data);
 
+  return allSubjectsResponse ;
+
+
+
+ }
+
+ Future<ExamsResponse?> getAllExamsForSubject(String token,String subjectId) async
+ {
+
+ String examsApiUrl="${ApiConstants.allExamsOfSubject}?subject=$subjectId";
+  var response = await _dio.get(examsApiUrl,
+      options: Options(
+       headers: {"token": token},
+      )
+  );
+  var allExamsResponse = ExamsResponse.fromJson(response.data);
+
+  return allExamsResponse ;
+
+
+
+ }
+
+
+
+ Future<ExamQuestionsResponse?> getAllQuestions(String token,String examId) async
+ {
+
+  String examsApiUrl="${ApiConstants.examQuestionsApi}?exam=$examId";
+  var response = await _dio.get(examsApiUrl,
+      options: Options(
+       headers: {"token": token},
+      )
+  );
+  var examQuestionsResponse = ExamQuestionsResponse.fromJson(response.data);
+
+  return examQuestionsResponse;
+
+
+
+ }
 
 
 
