@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:online_exam_app_v5/presentation/app_theme/app_theme_data.dart';
 import 'package:online_exam_app_v5/presentation/profile_default_Screen/explore/exam_questions/question_widget.dart';
+import 'package:online_exam_app_v5/presentation/utilities/result_to_total.dart';
 
 import '../../../../data/api/model/response/Questions.dart';
 import 'exam_header.dart';
@@ -8,8 +11,9 @@ import 'exam_score_screen.dart';
 
 class ExamScreenBody extends StatefulWidget {
   final List<Questions>? questions;
+  final Duration examDuration;
 
-  ExamScreenBody({required this.questions});
+  ExamScreenBody({required this.questions,required this.examDuration});
 
   @override
   _ExamScreenState createState() => _ExamScreenState();
@@ -20,13 +24,85 @@ class _ExamScreenState extends State<ExamScreenBody> {
   Map<int, String> userAnswers = {};
   List<bool> userAnswersChecked=[];
   int correctAnswerCount=0;
+  late Timer? _timer;
+  late Duration remainingTime;
 
+  @override
+  void initState() {
+    super.initState();
+    remainingTime=widget.examDuration;
+    _startTimer();
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer)
+    { setState(() {
+      if (remainingTime.inSeconds > 0) {
+        remainingTime = remainingTime - Duration(seconds: 1);
+      } else {
+        _timer?.cancel();
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset("assets/images/sand_timer.png"),
+                  SizedBox(width: 10,),
+                  Text("Time out !!",style: TextStyle(
+                    color:AppThemeData.errorColor,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold
+                  ),),
+                ],
+              ),
+              actions: [
+                Center(
+
+                  child: SizedBox(
+                    height: 50,
+                    width: 150,
+                    child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); //
+                          _navigateToScoreScreen();
+                        },
+                        child: Text('View score',style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold
+                        ),),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor:AppThemeData.primaryColor,
+                            padding: EdgeInsets.symmetric(vertical: 5),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(40),
+                                side: BorderSide(color: AppThemeData.primaryColor)
+                            )
+                        )
+                    ),
+                  ),
+                ),
+
+              ],
+            );
+          },
+        );
+      }
+    });
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
 
   void _onAnswerChecked(String answerKey, bool isCorrect) {
     userAnswersChecked.add(isCorrect);
   }
-
-
 
 
   void _nextQuestion() {
@@ -53,6 +129,7 @@ class _ExamScreenState extends State<ExamScreenBody> {
               },
               child: Text('yes'),
             ),
+
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); //
@@ -66,7 +143,9 @@ class _ExamScreenState extends State<ExamScreenBody> {
   }
   void _navigateToScoreScreen() {
     int correctCount = userAnswersChecked.where((answer) => answer).length;
-    Navigator.pushNamed(context,ExamScoreScreen.routeName,arguments: correctCount);
+    int? totalQuestions=widget.questions?.length;
+    ResultToTotal resultToTotal=ResultToTotal(correctAnswers: correctCount, totalQuestions: totalQuestions);
+    Navigator.pushNamed(context,ExamScoreScreen.routeName,arguments: resultToTotal);
   }
 
   void _prevQuestion() {

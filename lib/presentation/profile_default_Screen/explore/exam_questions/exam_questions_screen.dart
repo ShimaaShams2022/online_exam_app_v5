@@ -1,23 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:online_exam_app_v5/presentation/profile_default_Screen/explore/exam_questions/exam_body.dart';
+import 'package:online_exam_app_v5/presentation/profile_default_Screen/explore/exam_questions/show_timer_widget.dart';
 import '../../../../di.dart';
 import '../../../utilities/exam_data.dart';
 import 'exam_questions_viewmodel.dart';
+import 'dart:async';
 
 class ExamQuestionsScreen extends StatefulWidget {
   const ExamQuestionsScreen({super.key});
 
   static const String routeName = "ExamsQuestionsScreen";
 
+
   @override
   State<ExamQuestionsScreen> createState() => _ExamQuestionsScreenState();
 }
 
 class _ExamQuestionsScreenState extends State<ExamQuestionsScreen> {
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
-    final examDataForSubject = ModalRoute.of(context)?.settings.arguments as ExamData;
+   final examDataForSubject = ModalRoute.of(context)?.settings.arguments as ExamData;
+   Duration examDuration=Duration(minutes:examDataForSubject.examData.duration!.toInt() );
+
+
     return BlocProvider(
       create: (context) {
         ExamQuestionsViewModel questionsViewModel = getIt.get<ExamQuestionsViewModel>();
@@ -33,8 +45,8 @@ class _ExamQuestionsScreenState extends State<ExamQuestionsScreen> {
               Row(
                 children: [
                   Image.asset("assets/images/clock3.png"),
-
-                  Text(" 30.00")
+                  SizedBox(width: 5,),
+                  ShowTimerWidget(initialDuration: examDuration)
                 ],
               )
             ],
@@ -47,7 +59,8 @@ class _ExamQuestionsScreenState extends State<ExamQuestionsScreen> {
               return Center(child: CircularProgressIndicator());
             } else if(state is ExamQuestionsSuccessState) {
               var allQuestions=state.questions;
-              return ExamScreenBody(questions: allQuestions);
+
+              return ExamScreenBody(questions: allQuestions, examDuration:examDuration);
 
             }
             else {
