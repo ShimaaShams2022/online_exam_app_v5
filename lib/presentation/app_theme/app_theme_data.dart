@@ -15,6 +15,8 @@ class AppThemeData {
   static const Color dividerColor = Colors.white;
   static const Color selectBottomNavigationBox=Color(0xFFCCD7EB);
   static const Color bottomNavigationBackground=Color(0xFFEDEFF3);
+  static const Color greyDarkColor=Color(0xFF535353);
+  static const Color cameraBox=Color(0xFF5679BD);
 
 
 

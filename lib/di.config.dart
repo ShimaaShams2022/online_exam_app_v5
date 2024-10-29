@@ -40,6 +40,7 @@ import 'domain/repository/login_usecase.dart' as _i871;
 import 'domain/repository/register_usecase.dart' as _i702;
 import 'domain/repository/reset_password_use_case.dart' as _i881;
 import 'domain/repository/subjects_repository.dart' as _i92;
+import 'domain/repository/user_profile_usecase.dart' as _i765;
 import 'domain/repository/verify_uce_case.dart' as _i552;
 import 'presentation/forget_password/forget_password_view_model.dart' as _i1073;
 import 'presentation/forget_password/reset_password_view_model.dart' as _i430;
@@ -51,6 +52,8 @@ import 'presentation/profile_default_Screen/explore/exams/exams_viewmodel.dart'
     as _i337;
 import 'presentation/profile_default_Screen/explore/explore_viewmodel.dart'
     as _i140;
+import 'presentation/profile_default_Screen/user_profile/user_profile_view_model.dart'
+    as _i572;
 import 'presentation/register/register_view_model.dart' as _i733;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -92,16 +95,18 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i140.ExploreViewModel(gh<_i1038.ExploreUseCase>()));
     gh.factory<_i346.ExamsRepository>(
         () => _i384.ExamsRepositoryImpl(gh<_i395.ExamsOnLineDataSource>()));
+    gh.factory<_i533.ForgetPasswordUseCase>(
+        () => _i533.ForgetPasswordUseCase(gh<_i914.AuthRepository>()));
     gh.factory<_i871.LoginUseCase>(
         () => _i871.LoginUseCase(gh<_i914.AuthRepository>()));
     gh.factory<_i702.RegisterUseCase>(
         () => _i702.RegisterUseCase(gh<_i914.AuthRepository>()));
-    gh.factory<_i533.ForgetPasswordUseCase>(
-        () => _i533.ForgetPasswordUseCase(gh<_i914.AuthRepository>()));
-    gh.factory<_i552.VerifyUseCase>(
-        () => _i552.VerifyUseCase(gh<_i914.AuthRepository>()));
     gh.factory<_i881.ResetPasswordUseCase>(
         () => _i881.ResetPasswordUseCase(gh<_i914.AuthRepository>()));
+    gh.factory<_i765.UserProfileUseCase>(
+        () => _i765.UserProfileUseCase(gh<_i914.AuthRepository>()));
+    gh.factory<_i552.VerifyUseCase>(
+        () => _i552.VerifyUseCase(gh<_i914.AuthRepository>()));
     gh.factory<_i622.ExamQuestionsViewModel>(
         () => _i622.ExamQuestionsViewModel(gh<_i321.ExamQuestionsUseCase>()));
     gh.factory<_i1073.ForgetPasswordViewModel>(() =>
@@ -110,6 +115,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i430.ResetPasswordViewModel(gh<_i881.ResetPasswordUseCase>()));
     gh.factory<_i986.ExamsUseCase>(
         () => _i986.ExamsUseCase(gh<_i346.ExamsRepository>()));
+    gh.factory<_i572.UserProfileViewModel>(
+        () => _i572.UserProfileViewModel(gh<_i765.UserProfileUseCase>()));
     gh.factory<_i733.RegisterViewModel>(
         () => _i733.RegisterViewModel(gh<_i702.RegisterUseCase>()));
     gh.factory<_i25.VerifyViewModel>(

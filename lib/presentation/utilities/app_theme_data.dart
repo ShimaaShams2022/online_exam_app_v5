@@ -9,10 +9,13 @@ class AppThemeData {
   static const Color secondaryColor= Color(0xFF878787);
   static const Color errorColor= Color(0xFFCC1010);
   static const Color hintColor= Color(0xFFA6A6A6);
+  static const Color greyDarkColor= Color(0xFF535353);
   static const Color primaryBackgroundColor = Colors.white;
   static const Color textPrimaryColor = Colors.black;
   static const Color textSecondaryColor = Colors.white;
   static const Color dividerColor = Colors.white;
+
+
 
 
   static final ThemeData lightTheme= ThemeData(

@@ -6,6 +6,7 @@ import '../../../domain/common/api_results.dart';
 import '../../../domain/models/user.dart';
 import '../../api/api_manager.dart';
 import '../../api/model/api_extensions.dart';
+import '../../api/model/request/profile_request.dart';
 import '../../api/model/request/register_request.dart';
 
 import '../../contracts/auth/auth_online_data_source.dart';
@@ -88,6 +89,25 @@ class AuthOnlineDataSourceImpl implements Authonlinedatasource{
 
     return executeApi<AuthResponse?>(() async {
       var response = await apiManager.register(body);
+
+      return response?.toAuthResponse();
+    });
+
+  }
+
+  @override
+  Future<Result<AuthResponse?>> userProfile(ProfileRequest userProfile,String token) async {
+
+    var body = ProfileRequest(
+      username: userProfile.username,
+      firstName: userProfile.firstName,
+      lastName: userProfile.lastName,
+      email: userProfile.email,
+      phone: userProfile.phone,
+    );
+
+    return executeApi<AuthResponse?>(() async {
+      var response = await apiManager.userProfile(body,token);
 
       return response?.toAuthResponse();
     });

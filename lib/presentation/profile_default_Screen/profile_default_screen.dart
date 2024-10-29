@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:online_exam_app_v5/presentation/profile_default_Screen/result/result_screen.dart';
 import 'package:online_exam_app_v5/presentation/profile_default_Screen/user_profile/user_profile_screen.dart';
+import 'package:online_exam_app_v5/presentation/utilities/user_with_token.dart';
 
 import '../../domain/models/user.dart';
 import 'BottomNavItem.dart';
 import 'explore/explore_screen.dart';
 
 class ProfileDefaultScreen extends StatefulWidget {
-   ProfileDefaultScreen({required this.userToken,super.key});
+   ProfileDefaultScreen({required this.userWithToken,super.key});
 
   static const String routeName = "ProfileDefaultScreen";
 
-  String userToken;
+  UserWithToken? userWithToken;
 
 
   @override
@@ -23,9 +24,6 @@ class _ProfileDefaultScreenState extends State<ProfileDefaultScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Survey"),
-      ),
       body: tabs[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         onTap: (index) {

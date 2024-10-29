@@ -1,3 +1,4 @@
+import 'package:online_exam_app_v5/data/api/model/request/profile_request.dart';
 import 'package:online_exam_app_v5/domain/models/auth_response_domain_model.dart';
 
 import '../../../domain/common/api_results.dart';
@@ -16,6 +17,7 @@ abstract class Authonlinedatasource {
   Future<Result<AuthResponse?>> register (String  username,String  firstname,
       String  lastname,String  email,String  phone,String password,String  rePassword);
 
+  Future<Result<AuthResponse?>> userProfile (ProfileRequest userProfile,String token);
 
 
 

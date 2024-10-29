@@ -152,7 +152,8 @@ class _ExamScreenState extends State<ExamScreenBody> {
         examData: widget.examData,
         userAnswers: userAnswers,
         totalQuestions: totalQuestions,
-        correctAnswers: correctCount);
+        correctAnswers: correctCount,
+        questions: widget.questions);
 
 
     Navigator.pushReplacementNamed(context, ExamScoreScreen.routeName,
