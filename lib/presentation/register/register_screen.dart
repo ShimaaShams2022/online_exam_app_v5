@@ -11,6 +11,7 @@ import '../login/loginscreen.dart';
 import '../profile_default_Screen/profile_default_screen.dart';
 import '../utilities/size_utilities.dart';
 import '../utilities/text_utilities.dart';
+import '../utilities/user_with_token.dart';
 import '../utilities/utilitis.dart';
 import '../utilities/validation.dart';
 import '../widgets/custom_text_form_field.dart';
@@ -73,11 +74,13 @@ class RegisterScreen extends StatelessWidget {
               showErrorDialog(context, message);
             } else if (state is RegisterSuccessState) {
               var userToken=state.userResponse?.token;
+              var userData=state.userResponse?.user;
+              UserWithToken userWithToken=UserWithToken(user: userData, token: userToken);
 
               Navigator.of(context).popUntil((route)=>route.isFirst); // Close dialogs before showing success
               Navigator.pushNamed(context,
                 ProfileDefaultScreen.routeName,
-                arguments: userToken,
+                arguments: userWithToken,
               );
 
             }

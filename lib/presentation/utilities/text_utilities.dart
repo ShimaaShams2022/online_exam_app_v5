@@ -24,5 +24,6 @@ class TextUtilities{
   static const String askHaveAccount="Already have an account?";
   static const String loadingMessage="Loading......";
   static const String appName="Online Exam";
+  static const String profile="Profile";
 
 }

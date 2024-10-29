@@ -21,27 +21,32 @@ class ResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
-
-      margin: EdgeInsets.only(top: 8,bottom: 8),
-      padding:EdgeInsets.all(10),
-
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text("Language",style:TextStyle(fontSize: 20,fontWeight: FontWeight.w500),
-          ),
-          SizedBox(height: 10,),
-          Expanded(
-            child: ListView.separated(itemCount:examResultList.length,
-              scrollDirection: Axis.vertical,
-              separatorBuilder: (context,index)=>SizedBox(height: 10,),
-              itemBuilder: (context,index){
-                return Subject_result_widget(examResultSubject: examResultList[index],);
-              },
+    return  Scaffold(
+      appBar: AppBar(
+        title: Text("Result"),
+      ),
+      body: Container(
+      
+        margin: EdgeInsets.only(top: 8,bottom: 8),
+        padding:EdgeInsets.all(10),
+      
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Language",style:TextStyle(fontSize: 20,fontWeight: FontWeight.w500),
             ),
-          ),
-        ],
+            SizedBox(height: 10,),
+            Expanded(
+              child: ListView.separated(itemCount:examResultList.length,
+                scrollDirection: Axis.vertical,
+                separatorBuilder: (context,index)=>SizedBox(height: 10,),
+                itemBuilder: (context,index){
+                  return Subject_result_widget(examResultSubject: examResultList[index],);
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

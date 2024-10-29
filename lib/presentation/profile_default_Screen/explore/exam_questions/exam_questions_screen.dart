@@ -27,8 +27,8 @@ class _ExamQuestionsScreenState extends State<ExamQuestionsScreen> {
   @override
   Widget build(BuildContext context) {
    final examDataForSubject = ModalRoute.of(context)?.settings.arguments as ExamData;
-   Duration examDuration=Duration(minutes:examDataForSubject.examData.duration!.toInt() );
-
+  // Duration examDuration=Duration(minutes:examDataForSubject.examData.duration!.toInt() );
+   Duration examDuration=Duration(minutes:1 );
 
     return BlocProvider(
       create: (context) {
@@ -60,7 +60,7 @@ class _ExamQuestionsScreenState extends State<ExamQuestionsScreen> {
             } else if(state is ExamQuestionsSuccessState) {
               var allQuestions=state.questions;
 
-              return ExamScreenBody(questions: allQuestions, examDuration:examDuration);
+              return ExamScreenBody(examData: examDataForSubject,questions:allQuestions, examDuration:examDuration);
 
             }
             else {

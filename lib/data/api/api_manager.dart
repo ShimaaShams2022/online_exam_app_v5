@@ -7,6 +7,7 @@ import 'package:online_exam_app_v5/data/api/model/response/ExamsResponse.dart';
 import 'package:online_exam_app_v5/data/api/model/response/all_subjects_response.dart';
 
 import 'api_constants.dart';
+import 'model/request/profile_request.dart';
 import 'model/request/register_request.dart';
 import 'model/response/data_auth_response.dart';
 
@@ -100,6 +101,23 @@ return authResponse ;
   "rePassword" : registerRequest.rePassword,
   "phone" :registerRequest.phone,
   });
+  var authResponse=AuthResponseDto.fromJson(response.data);
+  return authResponse;
+ }
+
+ Future<AuthResponseDto?> userProfile(ProfileRequest profileRequest,String token) async {
+
+  var response=await _dio.put(ApiConstants.editProfileApi,data:{
+   "username": profileRequest.username,
+   "firstName":profileRequest.firstName,
+   "lastName" : profileRequest.lastName,
+   "email": profileRequest.email,
+   "phone" :profileRequest.phone,
+  },
+      options: Options(
+       headers: {"token": token},
+      )
+  );
   var authResponse=AuthResponseDto.fromJson(response.data);
   return authResponse;
  }
