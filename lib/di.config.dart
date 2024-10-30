@@ -30,6 +30,7 @@ import 'data/repository/exams_questions_repository_impl.dart' as _i126;
 import 'data/repository/exams_repository_impl.dart' as _i384;
 import 'data/repository/subjects_repository_impl.dart' as _i547;
 import 'domain/repository/auth_repository.dart' as _i914;
+import 'domain/repository/change_password_use_case.dart' as _i552;
 import 'domain/repository/exams_questions_repository.dart' as _i1069;
 import 'domain/repository/exams_questions_use_case.dart' as _i321;
 import 'domain/repository/exams_repository.dart' as _i346;
@@ -52,6 +53,8 @@ import 'presentation/profile_default_Screen/explore/exams/exams_viewmodel.dart'
     as _i337;
 import 'presentation/profile_default_Screen/explore/explore_viewmodel.dart'
     as _i140;
+import 'presentation/profile_default_Screen/user_profile/change_password_view_model.dart'
+    as _i624;
 import 'presentation/profile_default_Screen/user_profile/user_profile_view_model.dart'
     as _i572;
 import 'presentation/register/register_view_model.dart' as _i733;
@@ -107,6 +110,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i765.UserProfileUseCase(gh<_i914.AuthRepository>()));
     gh.factory<_i552.VerifyUseCase>(
         () => _i552.VerifyUseCase(gh<_i914.AuthRepository>()));
+    gh.factory<_i552.ChangePasswordUseCase>(
+        () => _i552.ChangePasswordUseCase(gh<_i914.AuthRepository>()));
     gh.factory<_i622.ExamQuestionsViewModel>(
         () => _i622.ExamQuestionsViewModel(gh<_i321.ExamQuestionsUseCase>()));
     gh.factory<_i1073.ForgetPasswordViewModel>(() =>
@@ -119,6 +124,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i572.UserProfileViewModel(gh<_i765.UserProfileUseCase>()));
     gh.factory<_i733.RegisterViewModel>(
         () => _i733.RegisterViewModel(gh<_i702.RegisterUseCase>()));
+    gh.factory<_i624.ChangePasswordViewModel>(
+        () => _i624.ChangePasswordViewModel(gh<_i552.ChangePasswordUseCase>()));
     gh.factory<_i25.VerifyViewModel>(
         () => _i25.VerifyViewModel(gh<_i552.VerifyUseCase>()));
     gh.factory<_i108.LoginViewModel>(

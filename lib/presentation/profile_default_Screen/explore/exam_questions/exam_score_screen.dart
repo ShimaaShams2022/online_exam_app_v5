@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:online_exam_app_v5/presentation/app_theme/app_theme_data.dart';
 import 'package:online_exam_app_v5/presentation/profile_default_Screen/explore/exam_questions/exam_questions_screen.dart';
+import 'package:online_exam_app_v5/presentation/profile_default_Screen/result/one_exam_result.dart';
 import 'package:online_exam_app_v5/presentation/utilities/result_to_total.dart';
 import 'package:online_exam_app_v5/presentation/utilities/score_circle.dart';
 import 'package:online_exam_app_v5/presentation/utilities/solved_exam_results.dart';
@@ -90,7 +91,9 @@ class ExamScoreScreen extends StatelessWidget {
                 Container(
                   width:MediaQuery.of(context).size.width*0.8,
                   child: ElevatedButton(
-                      onPressed: (){},
+                      onPressed: (){
+                        Navigator.pushNamed(context, OneExamResult.routeName,arguments: result);
+                      },
                       child: Text('Show Result',style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,

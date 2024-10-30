@@ -105,6 +105,21 @@ return authResponse ;
   return authResponse;
  }
 
+ Future<AuthResponseDto?> changePassword (String oldPassword,String newPassword,String rePassword,String token) async {
+
+  var response=await _dio.patch(ApiConstants.changePasswordApi,data:{
+   "oldPassword":oldPassword,
+   "password":newPassword,
+   "rePassword":rePassword,
+  },
+      options: Options(
+       headers: {"token": token},
+      )
+  );
+  var authResponse=AuthResponseDto.fromJson(response.data);
+  return authResponse;
+ }
+
  Future<AuthResponseDto?> userProfile(ProfileRequest profileRequest,String token) async {
 
   var response=await _dio.put(ApiConstants.editProfileApi,data:{

@@ -155,7 +155,7 @@ class UserProfileScreen extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
-                          child: FixedPasswordField(label:TextUtilities.passwordField,)
+                          child: FixedPasswordField(label:TextUtilities.passwordField,token:token ,)
                         ),
                         SizedBox(
                             width: MediaQuery.of(context).size.width *

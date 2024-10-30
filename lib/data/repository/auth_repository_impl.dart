@@ -47,6 +47,12 @@ class AuthRepositoryImpl implements AuthRepository {
         username, firstname, lastname, email, phone, password, rePassword);
   }
 
+
+  @override
+  Future<Result<AuthResponse?>>changePassword (String oldPassword,String newPassword,String rePassword,String token) {
+    return onlineDataSource.changePassword(oldPassword,newPassword,rePassword,token);
+  }
+
   @override
   Future<Result<AuthResponse?>> userProfile(ProfileRequest userProfile,String token) {
     return onlineDataSource.userProfile(userProfile,token);

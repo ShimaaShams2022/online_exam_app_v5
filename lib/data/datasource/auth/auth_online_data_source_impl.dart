@@ -113,4 +113,19 @@ class AuthOnlineDataSourceImpl implements Authonlinedatasource{
     });
 
   }
+
+
+
+
+  @override
+  Future<Result<AuthResponse?>> changePassword (String oldPassword,String newPassword,String rePassword,String token) async {
+
+    return executeApi<AuthResponse?>(() async {
+      var response = await apiManager.changePassword(oldPassword,newPassword,rePassword,token);
+
+      return response?.toAuthResponse();
+    });
+
+  }
+
 }
