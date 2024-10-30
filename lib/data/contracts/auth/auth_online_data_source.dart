@@ -19,6 +19,6 @@ abstract class Authonlinedatasource {
 
   Future<Result<AuthResponse?>> userProfile (ProfileRequest userProfile,String token);
 
-
+  Future<Result<AuthResponse?>> changePassword (String oldPassword,String newPassword,String rePassword,String token);
 
 }

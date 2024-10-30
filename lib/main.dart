@@ -11,6 +11,7 @@ import 'package:online_exam_app_v5/presentation/profile_default_Screen/explore/e
 import 'package:online_exam_app_v5/presentation/profile_default_Screen/explore/exams/exam_start_screen.dart';
 import 'package:online_exam_app_v5/presentation/profile_default_Screen/explore/exams/exams_screen.dart';
 import 'package:online_exam_app_v5/presentation/profile_default_Screen/profile_default_screen.dart';
+import 'package:online_exam_app_v5/presentation/profile_default_Screen/result/one_exam_result.dart';
 import 'package:online_exam_app_v5/presentation/profile_default_Screen/user_profile/change_password_screen.dart';
 
 import 'package:online_exam_app_v5/presentation/register/register_screen.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
         ExamQuestionsScreen.routeName: (_) =>ExamQuestionsScreen(),
         ExamScoreScreen.routeName:(_)=>ExamScoreScreen(),
         ChangePasswordScreen.routeName:(_)=>ChangePasswordScreen(),
+        OneExamResult.routeName:(_)=>OneExamResult(),
 
 
 

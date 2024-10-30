@@ -10,6 +10,8 @@ class ApiConstants {
  static const String allExamsOfSubject="/v1/exams";
  static const String examQuestionsApi="/v1/questions";
  static const String editProfileApi="/v1/auth/editProfile";
+ static const String changePasswordApi="/v1/auth/changePassword";
+
 
 
 }

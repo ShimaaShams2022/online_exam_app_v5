@@ -76,3 +76,11 @@ String? validateNumber(String? number) {
   return null;
 }
 
+String? validateOldPassword(String? savedPassword,String enteredPassword ){
+  if (savedPassword == null || enteredPassword.isEmpty) {
+    return 'Please enter your password';
+  } else if (savedPassword != enteredPassword) {
+    return 'Passwords do not match';
+  }
+  return null;
+}

@@ -17,4 +17,8 @@ String  lastname,String  email,String  phone,String password,String  rePassword)
 
 Future<Result<AuthResponse?>> userProfile (ProfileRequest userProfile,String token);
 
+Future<Result<AuthResponse?>>changePassword (String oldPassword,String newPassword,String rePassword,String token);
+
+
+
 }

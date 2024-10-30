@@ -8,9 +8,11 @@ import '../app_theme/app_theme_data.dart';
 class FixedPasswordField extends StatelessWidget {
 
   final String label;
+  String token;
 
   FixedPasswordField({
     required this.label,
+    required this.token,
 
   });
 
@@ -43,7 +45,7 @@ class FixedPasswordField extends StatelessWidget {
                     Spacer(),
                     TextButton(
                       onPressed: () {
-                        Navigator.pushNamed(context,ChangePasswordScreen.routeName);
+                        Navigator.pushNamed(context,ChangePasswordScreen.routeName,arguments: token);
                       },
                       child: Text('Change', style: TextStyle(color: Colors.blue)),
                     ),
