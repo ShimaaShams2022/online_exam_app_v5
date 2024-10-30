@@ -31,7 +31,7 @@ class _TimerWidgetState extends State<ShowTimerWidget> {
         });
       } else {
         _timer?.cancel();
-        print("Timer finished!");
+
       }
     });
   }
